@@ -1,2 +1,1 @@
-![real_estate](https://github.com/trivien11vn/REAL-ESTATE-PROJECT/assets/117751980/a8883fa2-8cf8-40d0-98a6-d34bd4a6e103)
-
+![Screenshot 2024-06-17 105749](https://github.com/trivien11vn/REAL-ESTATE-PROJECT/assets/117751980/4878734f-986b-4805-bbfc-c6b1fd26e752)
