@@ -5,7 +5,7 @@ import { Route, Routes } from 'react-router-dom'
 
 const App = () => {
   return (
-    <div className='text-gray-800 text-5xl'>
+    <div>
     <Routes>
       <Route path={path.PUBLIC_LAYOUT} element={<PublicLayout />}>
         <Route path={path.HOME} element={<Home />}/>

@@ -1,8 +1,16 @@
 import React from 'react'
+import { Outlet } from 'react-router-dom'
+import { Navigation, TopHeader } from 'src/components'
 
 const PublicLayout = () => {
   return (
-    <div>PublicLayout</div>
+    <main>
+      <TopHeader />
+      <Navigation />
+      <div>
+        <Outlet />
+      </div>
+    </main>
   )
 }
 

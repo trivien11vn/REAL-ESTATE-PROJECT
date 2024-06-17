@@ -1,7 +1,7 @@
 const path = {
     //PUBLIC
     PUBLIC_LAYOUT: '/',
-    HOME: '*',
+    HOME: '',
 }
 
 export default path

@@ -1,8 +1,14 @@
 import React from 'react'
-
 const Home = () => {
   return (
-    <div>home</div>
+    <div className='bg-white w-full '>
+      <div className='w-full h-fit'>
+          <img src='/banner.png' alt='banner' />
+      </div>
+      <div className='w-main mx-auto'>
+        contain
+      </div>
+    </div>
   )
 }
 
