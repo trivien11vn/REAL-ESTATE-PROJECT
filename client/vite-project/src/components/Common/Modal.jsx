@@ -2,9 +2,9 @@ import React from 'react'
 import { useAppStore } from 'src/store/useAppStore'
 
 const Modal = () => {
-  const {contentModal} = useAppStore()
+  const {contentModal, setModal} = useAppStore()
   return (
-    <div className='absolute top-0 left-0 w-screen h-screen bg-overlay-50 z-[1000]'>Modal</div>
+    <div onClick={() => setModal(false, null)} className='absolute top-0 left-0 w-screen h-screen bg-overlay-50 z-[1000] flex items-center justify-center'>{contentModal}</div>
   )
 }
 

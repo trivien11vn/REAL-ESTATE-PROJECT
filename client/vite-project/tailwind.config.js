@@ -5,6 +5,10 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
+    fontFamily:{
+      agbalumo: ['Agbalumo'],
+      dancing_script: ['Dancing Script']
+    },
     extend: {
       backgroundColor: {
         "main-50": "#EDEFF6", 

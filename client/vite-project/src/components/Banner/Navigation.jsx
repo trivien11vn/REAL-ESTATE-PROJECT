@@ -5,9 +5,16 @@ import { navigation } from 'src/utils/constant'
 import clsx from 'clsx'
 import withRouter from 'src/hocs/withRouter'
 import { twMerge } from 'tailwind-merge'
+import { useUserStore } from 'src/store/useUserStore'
+import path from 'src/utils/path'
+import { useAppStore } from 'src/store/useAppStore'
+import { Login } from '..'
 
 
-const Navigation = ({location}) => {
+const Navigation = ({location, navigate}) => {
+  const {token} = useUserStore()
+  const {setModal} = useAppStore()
+  console.log(setModal)
   return (
     <div className={twMerge(
       clsx('h-[85px] w-full bg-transparent fixed top-[85px] z-50 px-[100px] py-[26px] flex items-center justify-between',
@@ -22,11 +29,18 @@ const Navigation = ({location}) => {
             {el?.text}
           </NavLink>
         ))}
+        {token ? 
         <Button className={twMerge(
           clsx(location?.pathname === '/' && 'bg-transparent border-main-100 border')
         )}>
           Add Listing
-        </Button>
+        </Button> :
+        <Button className={twMerge(
+          clsx(location?.pathname === '/' && 'bg-transparent border-main-100 border')
+        )}
+          onClick={() => setModal(true, <Login />)}>
+          Sign In
+        </Button>}
       </div>
     </div>
   )

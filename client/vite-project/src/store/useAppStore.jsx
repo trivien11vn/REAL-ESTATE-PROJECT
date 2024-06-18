@@ -1,8 +1,9 @@
 import { create } from 'zustand'
 
-export const useAppStore = create(() => (
+export const useAppStore = create((set) => (
     {
         isShowModal: false,
-        contentModal: null
+        contentModal: null,
+        setModal: (isShowModal, contentModal) => set(() => ({isShowModal, contentModal})) 
     }
 ))
