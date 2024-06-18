@@ -14,7 +14,6 @@ import { Login } from '..'
 const Navigation = ({location, navigate}) => {
   const {token} = useUserStore()
   const {setModal} = useAppStore()
-  console.log(setModal)
   return (
     <div className={twMerge(
       clsx('h-[85px] w-full bg-transparent fixed top-[85px] z-50 px-[100px] py-[26px] flex items-center justify-between',
