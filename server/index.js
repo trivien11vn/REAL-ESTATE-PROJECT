@@ -2,6 +2,7 @@ const express = require('express');
 require('dotenv').config();
 const cors = require('cors');
 const dbconnect = require('./config/dbconn');
+const initRoute = require('./routes')
 const app = express()
 //middleware
 app.use(cors({
@@ -13,6 +14,7 @@ app.use(express.urlencoded({
     extended: true
 }))
 
+initRoute(app)
 dbconnect()
 
 const PORT = process.env.PORT || 7777
