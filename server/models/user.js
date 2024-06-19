@@ -18,8 +18,16 @@ module.exports = (sequelize, DataTypes) => {
     phone: DataTypes.STRING,
     email: DataTypes.STRING,
     address: DataTypes.STRING,
-    password: DataTypes.STRING,
-    role: DataTypes.INTEGER,
+    password: {
+      type: DataTypes.STRING,
+      set(value) {
+        this.setDataValue('password', value);
+      }
+    },
+    role: {
+      type: DataTypes.ENUM,
+      values: ['USER', 'AGENT', 'ADMIN'],
+    },
     avatar: DataTypes.STRING,
 
   }, {

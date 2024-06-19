@@ -17,12 +17,9 @@ const register = asyncHandler(async (req, res) => {
         defaults: req.body
     })
 
-    console.log(response);
-
     return res.json({
-        success: true, 
-        mes: 'Success',
-        data: {password, phone, email, role}
+        success: response[1],
+        mes: response[1] ? 'Success' : 'Phone number already exists',
     })
 
 })
