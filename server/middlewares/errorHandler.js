@@ -7,15 +7,18 @@ const errHandler = (error, req, res, next) => {
 }
 
 const throwErrorWithStatus = (code, message, res, next) => { 
-    console.log(next)
-    console.log('abcd')
     const error = new Error(message)
     res.status(code)
     next(error)
  }
 
-
+const badRequestException = (req, res, next) => { 
+    const error  = new Error(`Route ${req.originalUrl} not found`)
+    res.status(404)
+    next(error)
+ }
 module.exports = {
     errHandler,
-    throwErrorWithStatus
+    throwErrorWithStatus,
+    badRequestException
 }

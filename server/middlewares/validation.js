@@ -1,8 +1,9 @@
 const { throwErrorWithStatus } = require("./errorHandler");
 
-const validateDto = (schema) => (req,res,next)=>{
-    const {error} = schema.validate(req.body);
+const validateDto = (schema) => (req,res,next)=>{  
     console.log('111')
+    console.log({next})
+    const {error} = schema.validate(req.body);
     console.log(error)
     console.log('222')
     if(error){

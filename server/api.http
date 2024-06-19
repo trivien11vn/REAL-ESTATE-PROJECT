@@ -1,4 +1,3 @@
 ### Register
-POST http://localhost:5000/api/auth/register?name=tv&phone=123
+POST http://localhost:5000/api/auth/
 Content-Type: application/json
-
