@@ -2,12 +2,46 @@ import clsx from 'clsx'
 import React, { useEffect, useState } from 'react'
 import { Button, InputForm, InputRadio } from '..'
 import { useForm } from 'react-hook-form'
+import { apiRegister, apiSignin } from 'src/apis/auth'
+import Swal from 'sweetalert2'
+import { toast } from 'react-toastify'
+import withRouter from 'src/hocs/withRouter'
+import { useAppStore } from 'src/store/useAppStore'
 
-const Login = () => {
+const Login = ({location, navigate}) => {
   const [variant, setVariant] = useState('login')
+  const {setModal} = useAppStore()
   const {register, formState:{errors}, handleSubmit, reset} = useForm()
-  const onSubmit = (data) => {
-    console.log(data)
+  const onSubmit = async(data) => {
+    if(variant === 'signup'){
+      const response = await apiRegister(data)
+      if(response?.success){
+        Swal.fire({
+          icon: 'success',
+          title: 'Congratulations! You have successfully registered',
+          text: response.mes,
+          showConfirmButton: true,
+          confirmButtonText: 'Go to sign in'
+        }).then(({isConfirmed}) => { 
+            if(isConfirmed) setVariant('login')
+         })
+      }
+      else{
+        toast.error(response.mes)
+      }
+    }
+    else if(variant === 'login'){
+      const {name, role, ...payload} = data
+      const response = await apiSignin(payload)
+      if(response?.success){
+        toast.success(response.mes)
+        setModal(false, null)
+      }
+      else{
+        toast.error(response.mes)
+      }
+    }
+    
   }
 
   useEffect(() => {
@@ -29,7 +63,13 @@ const Login = () => {
           register={register} 
           id='phone' 
           placeholder='Type your phone number'
-          validate={{required: 'Please enter a valid phone number'}}
+          validate={{
+            required: 'Please enter a valid phone number',
+            pattern: {
+              value: /(84|0[3|5|7|8|9])+([0-9]{8})\b/,
+              message: 'Phone number is invalid'
+            }
+          }}
           errors={errors}
           />
         <InputForm 
@@ -47,7 +87,7 @@ const Login = () => {
         label='Your full name' 
         inputClassname='rounded-md' 
         register={register} 
-        id='full_name' 
+        id='name' 
         placeholder='Type your full name'
         errors={errors} 
         validate={{required: 'This field cannot be empty'}}
@@ -77,4 +117,4 @@ const Login = () => {
   )
 }
 
-export default Login
+export default withRouter(Login)

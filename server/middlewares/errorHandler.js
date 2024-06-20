@@ -8,7 +8,6 @@ const errHandler = (error, req, res, next) => {
 }
 
 const throwErrorWithStatus = (code, message, res, next) => { 
-    console.log({message})
     const error = new Error(message)
     res.status(code)
     next(error)

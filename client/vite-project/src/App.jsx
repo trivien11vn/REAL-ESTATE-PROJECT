@@ -4,6 +4,8 @@ import path from './utils/path'
 import { Route, Routes } from 'react-router-dom'
 import { Modal } from './components'
 import { useAppStore } from './store/useAppStore'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const App = () => {
   const {isShowModal} = useAppStore()
@@ -19,6 +21,18 @@ const App = () => {
         <Route path={path.SEARCH} element={<Search />}/>
       </Route>
     </Routes>
+    <ToastContainer
+      position="top-right"
+      autoClose={5000}
+      hideProgressBar={false}
+      newestOnTop={false}
+      closeOnClick
+      rtl={false}
+      pauseOnFocusLoss
+      draggable
+      pauseOnHover
+      theme="colored"
+    />
     </>
   )
 }

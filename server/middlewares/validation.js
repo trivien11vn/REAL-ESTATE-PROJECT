@@ -8,7 +8,6 @@ const validateDto = (schema) => (req,res,next)=>{
             //     message: error.details[0].message
             // })
         const message = error.details[0].message?.replaceAll('\"',"")
-        console.log(message)
         throwErrorWithStatus(403, message, res, next)
     }
     next()

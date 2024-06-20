@@ -22,7 +22,7 @@ const register = asyncHandler(async (req, res) => {
 
     return res.json({
         success: response[1],
-        mes: response[1] ? 'Success' : 'Phone number already exists',
+        mes: response[1] ? 'Your account has been successfully created!' : 'Phone number already exists',
     })
 
 })
