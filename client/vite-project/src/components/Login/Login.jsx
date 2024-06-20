@@ -10,11 +10,15 @@ import { useAppStore } from 'src/store/useAppStore'
 
 const Login = ({location, navigate}) => {
   const [variant, setVariant] = useState('login')
+  const [isLoading, setIsLoading] = useState(false)
   const {setModal} = useAppStore()
   const {register, formState:{errors}, handleSubmit, reset} = useForm()
+  
   const onSubmit = async(data) => {
     if(variant === 'signup'){
+      setIsLoading(true)
       const response = await apiRegister(data)
+      setIsLoading(false)
       if(response?.success){
         Swal.fire({
           icon: 'success',
