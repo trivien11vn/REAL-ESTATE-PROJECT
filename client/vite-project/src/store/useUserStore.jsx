@@ -1,3 +1,4 @@
+import { apiGetCurrent } from 'src/apis/user'
 import { create } from 'zustand'
 import { persist, createJSONStorage } from 'zustand/middleware'
 
@@ -6,11 +7,17 @@ export const useUserStore = create(persist(
         {
             token: null,
             current: null,
-            abc: 'abc'
+            setToken: (token) => set(() => ({token})),
+            getCurrent: async () => {               
+                const response = await apiGetCurrent()
+                if(response?.success){
+                    return set(() => ({current: response?.currentUser}))
+                }
+            }
         }
     ),
     {
-        name: 'rest_state1',
+        name: 'rest_state',
         storage: createJSONStorage(() => localStorage),
         // return an object of state to save
         partialize: (state) => 

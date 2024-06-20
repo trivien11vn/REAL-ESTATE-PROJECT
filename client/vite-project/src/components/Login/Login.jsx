@@ -7,11 +7,13 @@ import Swal from 'sweetalert2'
 import { toast } from 'react-toastify'
 import withRouter from 'src/hocs/withRouter'
 import { useAppStore } from 'src/store/useAppStore'
+import { useUserStore } from 'src/store/useUserStore'
 
 const Login = ({location, navigate}) => {
   const [variant, setVariant] = useState('login')
   const [isLoading, setIsLoading] = useState(false)
   const {setModal} = useAppStore()
+  const {token, setToken} = useUserStore()
   const {register, formState:{errors}, handleSubmit, reset} = useForm()
   
   const onSubmit = async(data) => {
@@ -39,6 +41,9 @@ const Login = ({location, navigate}) => {
       const response = await apiSignin(payload)
       if(response?.success){
         toast.success(response.mes)
+
+        // Save token to local storage
+        setToken(response.accessToken)
         setModal(false, null)
       }
       else{
@@ -52,6 +57,7 @@ const Login = ({location, navigate}) => {
     reset()
   }, [variant])
   
+  console.log(token)
   return (
     <div onClick={(e)=>e.stopPropagation()} 
         className='bg-white rounded-md px-6 py-8 flex flex-col items-center gap-6 w-[550px] text-lg'>
