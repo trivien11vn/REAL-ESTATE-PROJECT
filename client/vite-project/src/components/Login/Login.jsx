@@ -1,13 +1,13 @@
 import clsx from 'clsx'
 import React, { useEffect, useState } from 'react'
-import { Button, InputForm } from '..'
+import { Button, InputForm, InputRadio } from '..'
 import { useForm } from 'react-hook-form'
 
 const Login = () => {
   const [variant, setVariant] = useState('login')
   const {register, formState:{errors}, handleSubmit, reset} = useForm()
-  console.log(errors)
   const onSubmit = (data) => {
+    console.log(data)
   }
 
   useEffect(() => {
@@ -50,6 +50,20 @@ const Login = () => {
         id='full_name' 
         placeholder='Type your full name'
         errors={errors} 
+        validate={{required: 'This field cannot be empty'}}
+        />
+        }
+        {variant === 'signup' &&
+        <InputRadio 
+          label='Type account' 
+          register={register} 
+          id='role' 
+          validate={{required: 'This field cannot be empty'}}
+          errors={errors} 
+          options={[
+            {label: 'User', value: 'USER'},
+            {label: 'Agent', value: 'AGENT'}
+          ]}
         />
         }
         <Button onClick={handleSubmit(onSubmit)} className='py-2 my-6'>{
