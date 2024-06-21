@@ -23,7 +23,16 @@ const verifyToken = (req, res, next) => {
 const isAgent = async(req, res, next) => {
     const {roleCode} = req.user
 
-    if(roleCode === '4'){
+    if(roleCode !== '1' && roleCode !== '2' && roleCode !== '3'){
+        return throwErrorWithStatus(401, 'You dont have permission to access', res, next)
+    }
+    next()
+}
+
+const isOwner = async(req, res, next) => {
+    const {roleCode} = req.user
+
+    if(roleCode !== '1' && roleCode !== '2') {
         return throwErrorWithStatus(401, 'You dont have permission to access', res, next)
     }
     next()
@@ -38,14 +47,6 @@ const isAdmin = async(req, res, next) => {
     next()
 }
 
-const isOwner = async(req, res, next) => {
-    const {roleCode} = req.user
-
-    if(roleCode === '4' || roleCode === '3') {
-        return throwErrorWithStatus(401, 'You dont have permission to access', res, next)
-    }
-    next()
-}
 module.exports = {
     verifyToken,
     isAgent,
