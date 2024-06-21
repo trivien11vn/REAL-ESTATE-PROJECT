@@ -42,7 +42,7 @@ const signIn = asyncHandler(async (req, res, next) => {
             throwErrorWithStatus(401, 'Something went wrong', res, next)
         }
         else{
-            const token = jwt.sign({uid: user.id, role: user.role}, process.env.JWT_SECRET, {expiresIn: '7d'})
+            const token = jwt.sign({uid: user.id, roleCode: user.roleCode}, process.env.JWT_SECRET, {expiresIn: '7d'})
             return res.json({
                 success: true,
                 mes: 'Sign in is successful',
