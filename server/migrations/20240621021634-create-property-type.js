@@ -5,18 +5,21 @@ module.exports = {
     await queryInterface.createTable('PropertyTypes', {
       id: {
         allowNull: false,
-        autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.UUID,
+        defaultValue: Sequelize.literal('gen_random_uuid()'),
       },
-      firstName: {
-        type: Sequelize.STRING
+      name: {
+        type: Sequelize.STRING,
+        allowNull: false
       },
-      lastName: {
-        type: Sequelize.STRING
+      description: {
+        type: Sequelize.TEXT,
+        allowNull: false
       },
-      email: {
-        type: Sequelize.STRING
+      image: {
+        type: Sequelize.STRING,
+        allowNull: false
       },
       createdAt: {
         allowNull: false,

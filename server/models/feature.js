@@ -14,9 +14,8 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Feature.init({
-    firstName: DataTypes.STRING,
-    lastName: DataTypes.STRING,
-    email: DataTypes.STRING
+    name: DataTypes.STRING,
+    image: DataTypes.STRING,
   }, {
     sequelize,
     modelName: 'Feature',

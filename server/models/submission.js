@@ -14,9 +14,9 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Submission.init({
-    firstName: DataTypes.STRING,
-    lastName: DataTypes.STRING,
-    email: DataTypes.STRING
+    propertyId: DataTypes.UUID,
+    uid: DataTypes.UUID,
+    message: DataTypes.TEXT
   }, {
     sequelize,
     modelName: 'Submission',

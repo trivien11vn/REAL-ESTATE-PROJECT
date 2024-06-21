@@ -5,18 +5,23 @@ module.exports = {
     await queryInterface.createTable('PropertyFeatures', {
       id: {
         allowNull: false,
-        autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.UUID,
+        defaultValue: Sequelize.literal('gen_random_uuid()'),
       },
-      firstName: {
-        type: Sequelize.STRING
+      propertyId: {
+        type: Sequelize.UUID,
+        references:{
+          model: 'Properties',
+          key: 'id'
+        }
       },
-      lastName: {
-        type: Sequelize.STRING
-      },
-      email: {
-        type: Sequelize.STRING
+      featureId: {
+        type: Sequelize.UUID,
+        references:{
+          model: 'Features',
+          key: 'id'
+        }
       },
       createdAt: {
         allowNull: false,

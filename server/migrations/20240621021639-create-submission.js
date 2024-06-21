@@ -1,29 +1,30 @@
 'use strict';
 /** @type {import('sequelize-cli').Migration} */
-const db = require('../models')
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('UserMedia', {
+    await queryInterface.createTable('Submissions', {
       id: {
         allowNull: false,
         primaryKey: true,
         type: Sequelize.UUID,
         defaultValue: Sequelize.literal('gen_random_uuid()'),
       },
+      propertyId: {
+        type: Sequelize.UUID,
+        references:{
+          model: 'Properties',
+          key: 'id'
+        }
+      },
       uid: {
         type: Sequelize.UUID,
-        allowNull: false,
+        references:{
+          model: 'Users',
+          key: 'id'
+        }
       },
-      provider: {
-        type: Sequelize.STRING,
-        allowNull: false
-      },
-      link: {
-        type: Sequelize.STRING,
-        allowNull: false
-      },
-      icon: {
-        type: Sequelize.STRING,
+      message: {
+        type: Sequelize.TEXT,
         allowNull: false
       },
       createdAt: {
@@ -37,6 +38,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('UserMedia');
+    await queryInterface.dropTable('Submissions');
   }
 };

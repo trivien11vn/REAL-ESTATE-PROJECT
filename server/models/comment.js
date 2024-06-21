@@ -14,9 +14,10 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Comment.init({
-    firstName: DataTypes.STRING,
-    lastName: DataTypes.STRING,
-    email: DataTypes.STRING
+    text: DataTypes.TEXT,
+    propertyId: DataTypes.UUID,
+    uid: DataTypes.UUID,
+    parentComment:DataTypes.UUID
   }, {
     sequelize,
     modelName: 'Comment',

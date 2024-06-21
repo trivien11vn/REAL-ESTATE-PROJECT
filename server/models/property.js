@@ -14,9 +14,35 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Property.init({
-    firstName: DataTypes.STRING,
-    lastName: DataTypes.STRING,
-    email: DataTypes.STRING
+    name: DataTypes.STRING,
+    description: DataTypes.TEXT,
+    listingType: {
+      type: DataTypes.ENUM,
+      values: ['SALE','RENTAL']
+    },
+    price: DataTypes.FLOAT,
+    propertyTypeId: DataTypes.UUID,
+    status: {
+      type: DataTypes.ENUM,
+      values: ['PENDING', 'CANCELED', 'APPROVED'],
+    },
+    isAvailable: DataTypes.BOOLEAN,
+    images: {
+      type: DataTypes.TEXT,
+      get(){
+        const rawValue = this.getDataValue('images')
+        return rawValue ? JSON.parse(rawValue) : []
+      },
+      set(arrayImages){
+        this.setDataValue('images', JSON.stringify(arrayImages))
+      }
+    },
+    featuredImage: DataTypes.STRING,
+    postedBy: DataTypes.UUID,
+    bedRoom: DataTypes.INTEGER,
+    bathRoom: DataTypes.INTEGER,
+    size: DataTypes.FLOAT,
+    yearBuilt: DataTypes.INTEGER,
   }, {
     sequelize,
     modelName: 'Property',

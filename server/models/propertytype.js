@@ -14,9 +14,9 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   PropertyType.init({
-    firstName: DataTypes.STRING,
-    lastName: DataTypes.STRING,
-    email: DataTypes.STRING
+    name: DataTypes.STRING,
+    description: DataTypes.TEXT,
+    image: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'PropertyType',

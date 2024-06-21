@@ -10,10 +10,12 @@ module.exports = {
         defaultValue: Sequelize.literal('gen_random_uuid()'),
       },
       name: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false
       },
       description: {
-        type: Sequelize.TEXT
+        type: Sequelize.TEXT,
+        allowNull: false
       },
       listingType: {
         type: Sequelize.ENUM(['SALE','RENTAL']),
@@ -25,7 +27,11 @@ module.exports = {
       },
       propertyTypeId: {
         type: Sequelize.UUID,
-        allowNull: false
+        allowNull: false,
+        references: {
+          model: 'PropertyTypes',
+          key: 'id'
+        }
       },
       status: {
         type: Sequelize.ENUM(['PENDING', 'CANCELED', 'APPROVED']),
@@ -45,7 +51,11 @@ module.exports = {
       },
       postedBy: {
         type: Sequelize.UUID,
-        allowNull: false
+        allowNull: false,
+        references: {
+          model: 'Users',
+          key: 'id'
+        }
       },
       bedRoom: {
         type: Sequelize.INTEGER,
@@ -58,10 +68,6 @@ module.exports = {
       },
       yearBuilt: {
         type: Sequelize.INTEGER,
-      },
-      postedBy: {
-        type: Sequelize.UUID,
-        allowNull: false
       },
       createdAt: {
         allowNull: false,
