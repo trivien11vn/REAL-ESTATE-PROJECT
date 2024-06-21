@@ -6,7 +6,7 @@ const { stringReq, numberReq } = require('../middlewares/joiSchema');
 
 router.post(
     '/register', 
-    validateDto(Joi.object({password: stringReq, name: stringReq, phone: numberReq, role: stringReq})), 
+    validateDto(Joi.object({password: stringReq, name: stringReq, phone: numberReq, roleCode: stringReq})), 
     ctrls.register)
 
 router.post(
