@@ -16,4 +16,8 @@ router.post(
     })),
     ctrls.createNewPropertyType), 
 
+router.get(
+    '/',
+    ctrls.getPropertyType), 
+
 module.exports = router
