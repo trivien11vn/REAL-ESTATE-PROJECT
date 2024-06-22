@@ -4,7 +4,9 @@ const ctrls = require('../controllers/propertyType');
 const { stringReq, string } = require('../middlewares/joiSchema');
 const { verifyToken, isAdmin } = require('../middlewares/verifyToken');
 const validateDto = require('../middlewares/validation');
+const rateLimit = require('../middlewares/rateLimit');
 
+router.use(rateLimit)
 router.post(
     '/',
     verifyToken,
