@@ -4,6 +4,8 @@ const cors = require('cors');
 const dbconnect = require('./config/dbconn');
 const initRoute = require('./routes')
 const app = express()
+require('./config/redis.config')
+
 //middleware
 app.use(cors({
     origin: process.env.CLIENT_URL

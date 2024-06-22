@@ -6,6 +6,7 @@ const bcrypt =  require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { options, when } = require('joi');
 const { Sequelize } = require('sequelize');
+const redis = require('../config/redis.config')
 
 const createNewPropertyType = asyncHandler(async (req, res) => {
     const {name} = req.body
@@ -50,10 +51,20 @@ const getPropertyType = asyncHandler(async (req, res) => {
     }
 
     if(!limit){
+        const alreadyGetAll = await redis.get('get-propertyType')
+        if(alreadyGetAll) {
+            return res.json({
+                success: true,
+                mes: 'Got successfully',
+                propertyType: JSON.parse(alreadyGetAll)
+            })
+        }
         const response = await db.PropertyType.findAll({
             where: query,
             ...options,
         })
+
+        redis.set('get-propertyType', JSON.stringify(response))
         return res.json({
             success: response.length > 0 ? true : false,
             mes: response.length > 0 ? 'Got successfully' : 'Cannot get',
