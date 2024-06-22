@@ -22,7 +22,7 @@ const createNewPropertyType = asyncHandler(async (req, res) => {
 })
 
 const getPropertyType = asyncHandler(async (req, res) => {
-    const {limit, page, fields, type, name, ...query} = req.query
+    const {limit, page, fields, name, sort, ...query} = req.query
     console.log(query)
 
     const options = {}
@@ -40,7 +40,19 @@ const getPropertyType = asyncHandler(async (req, res) => {
     if(name){
         query.name = Sequelize.where(Sequelize.fn('LOWER', Sequelize.col('name')), 'LIKE', '%' + name.toLocaleLowerCase() + '%') 
     }
-    if(type === 'ALL'){
+
+    //Sorting
+    if(sort){
+        const order = sort.split(',')
+        options.order = order.map(el => {
+            if(el.startsWith('-')){
+                return [el.replace('-',''), 'DESC']
+            }
+            return [el, 'ASC']
+        })
+    }
+
+    if(!limit){
         const response = await db.PropertyType.findAll({
             where: query,
             ...options,
@@ -52,7 +64,20 @@ const getPropertyType = asyncHandler(async (req, res) => {
         })
     }
     else{
-        return res.json({})
+        const prevPage = page-1 >= 0 ? page : 1
+        const offset = (prevPage-1) * limit
+        if(offset) options.offset = offset
+        options.limit = +limit
+        console.log(options)
+        const response = await db.PropertyType.findAndCountAll({
+            where: query,
+            ...options,
+        })
+        return res.json({
+            success: response.length > 0 ? true : false,
+            mes: response.length > 0 ? 'Got successfully' : 'Cannot get',
+            propertyType: response
+        })
     }
 })
 
