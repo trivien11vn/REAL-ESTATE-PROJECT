@@ -20,4 +20,24 @@ router.get(
     '/',
     ctrls.getPropertyType), 
 
+
+//PUT dùng để cập nhật toàn bộ tài nguyên, còn PATCH dùng để cập nhật một phần tài nguyên.
+router.patch(
+    '/:id',
+    verifyToken,
+    isAdmin,
+    validateDto(Joi.object({
+        name: string,
+        description: string,
+        image: string
+    })),
+    ctrls.updatePropertyType), 
+
+
+router.delete(
+    '/:id',
+    verifyToken,
+    isAdmin,
+    ctrls.removePropertyType), 
+    
 module.exports = router

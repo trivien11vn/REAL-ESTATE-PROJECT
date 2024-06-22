@@ -4,7 +4,7 @@ const db = require('../models');
 const { throwErrorWithStatus } = require('../middlewares/errorHandler');
 const bcrypt =  require('bcrypt');
 const jwt = require('jsonwebtoken');
-const { options } = require('joi');
+const { options, when } = require('joi');
 const { Sequelize } = require('sequelize');
 
 const createNewPropertyType = asyncHandler(async (req, res) => {
@@ -23,7 +23,6 @@ const createNewPropertyType = asyncHandler(async (req, res) => {
 
 const getPropertyType = asyncHandler(async (req, res) => {
     const {limit, page, fields, name, sort, ...query} = req.query
-    console.log(query)
 
     const options = {}
     if(fields){
@@ -42,14 +41,12 @@ const getPropertyType = asyncHandler(async (req, res) => {
     }
 
     //Sorting
+    // order = [[createdAt,ASC], [name,DESC]]
     if(sort){
-        const order = sort.split(',')
-        options.order = order.map(el => {
-            if(el.startsWith('-')){
-                return [el.replace('-',''), 'DESC']
-            }
-            return [el, 'ASC']
-        })
+        const order = sort.split(',').map(
+            el => el.startsWith('-') ? [el.replace('-',''), 'DESC'] : [el, 'ASC']
+        )
+        options.order = order
     }
 
     if(!limit){
@@ -68,7 +65,6 @@ const getPropertyType = asyncHandler(async (req, res) => {
         const offset = (prevPage-1) * limit
         if(offset) options.offset = offset
         options.limit = +limit
-        console.log(options)
         const response = await db.PropertyType.findAndCountAll({
             where: query,
             ...options,
@@ -81,8 +77,32 @@ const getPropertyType = asyncHandler(async (req, res) => {
     }
 })
 
+const updatePropertyType = asyncHandler(async (req, res, next) => {
+    const {id} = req.params
+    if(Object.keys(req.body).length === 0){
+        return throwErrorWithStatus(403, 'No data to update', res, next)
+    }
+    const response = await db.PropertyType.update(req.body,{where: {id}})
+    return res.json({
+        success: response[0] > 0,
+        mes: response[0] > 0 ? 'Updated successfully' : 'Cannot update'
+    })
+})
+
+const removePropertyType = asyncHandler(async (req, res, next) => {
+    const {id} = req.params
+    const response = await db.PropertyType.destroy({where: {id}})
+    console.log(response)
+    return res.json({
+        success: response > 0,
+        mes: response > 0 ? 'Deleted successfully' : 'Cannot delete'
+    })
+})
+
 
 module.exports = {
     createNewPropertyType,
-    getPropertyType
+    getPropertyType,
+    updatePropertyType,
+    removePropertyType
 }
