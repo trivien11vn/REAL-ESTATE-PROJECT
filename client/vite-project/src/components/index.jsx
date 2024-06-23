@@ -8,3 +8,5 @@ export {default as Login} from './Login/Login'
 
 export {default as InputForm} from './Inputs/InputForm'
 export {default as InputRadio} from './Inputs/InputRadio'
+
+export {default as AdminSidebar} from './Sidebar/AdminSidebar'

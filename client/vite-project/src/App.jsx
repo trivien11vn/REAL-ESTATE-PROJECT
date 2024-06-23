@@ -7,6 +7,7 @@ import { useAppStore } from './store/useAppStore'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useUserStore } from './store/useUserStore'
+import { AdminLayout, CreatePropertyType, DashBoard, ManagePropertyType } from './pages/admin'
 
 const App = () => {
   const {isShowModal} = useAppStore()
@@ -26,6 +27,13 @@ const App = () => {
         <Route path={path.PROPERTIES} element={<Properties />}/>
         <Route path={path.OUR_AGENTS} element={<OurAgents />}/>
         <Route path={path.SEARCH} element={<Search />}/>
+      </Route>
+
+      {/* Admin routes */}
+      <Route path={path.ADMIN_LAYOUT} element={<AdminLayout />}>
+        <Route path={path.DASHBOARD} element={<DashBoard />}/>
+        <Route path={path.MANAGE_PROPERTY_TYPE} element={<ManagePropertyType />}/>
+        <Route path={path.CREATE_PROPERTY_TYPE} element={<CreatePropertyType />}/>
       </Route>
     </Routes>
     <ToastContainer
