@@ -34,7 +34,7 @@ export const navigation = [
 export const adminSidebar = [
     {
         id: 1,
-        path: `${path.ADMIN_LAYOUT}/${path.DASHBOARD}`,
+        path: `/${path.ADMIN_LAYOUT}/${path.DASHBOARD}`,
         name: 'Dashboard',
         icon: <MdOutlineDashboard />,
         type: 'SINGLE'
@@ -47,12 +47,12 @@ export const adminSidebar = [
         subs: [
             {
                 id: 3,
-                path: `${path.ADMIN_LAYOUT}/${path.CREATE_PROPERTY_TYPE}`,
+                path: `/${path.ADMIN_LAYOUT}/${path.CREATE_PROPERTY_TYPE}`,
                 name: 'Create a new',
             },
             {
                 id: 4,
-                path: `${path.ADMIN_LAYOUT}/${path.MANAGE_PROPERTY_TYPE}`,
+                path: `/${path.ADMIN_LAYOUT}/${path.MANAGE_PROPERTY_TYPE}`,
                 name: 'Manage property type',
             }
         ]
