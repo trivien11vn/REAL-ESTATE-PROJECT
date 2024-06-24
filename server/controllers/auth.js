@@ -12,14 +12,30 @@ const register = asyncHandler(async (req, res) => {
     // client sent: params (?q=abcd) ---> req.query
     // client sent: api/user/:id ---> req.params
 
-    const {phone} = req.body; //urlencode - form data
+    const {phone, name, password} = req.body; //urlencode - form data
 
     // Handle logic: goi thong tin -> check tai khoan da ton tai chua (check phone) -> save vao db
     const response = await db.User.findOrCreate({
         where: {phone: phone},
-        defaults: req.body
+        defaults:{
+            phone,
+            name,
+            password
+        }
     })
-
+    const userId = response[0].id
+    if(userId){
+        const roleCode = ['4']
+        
+        if(req?.body?.roleCode){
+            roleCode.push(req.body.roleCode)
+        }
+        const roleCodeBulk = roleCode.map(role => ({userId, roleCode: role}))
+        const updateRole = await db.User_Role.bulkCreate(roleCodeBulk)
+        if(!updateRole){
+            await db.User.destroy({where: {id: userId}})
+        }
+    }
     return res.json({
         success: response[1],
         mes: response[1] ? 'Your account has been successfully created!' : 'Phone number already exists',

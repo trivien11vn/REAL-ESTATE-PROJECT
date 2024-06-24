@@ -3,7 +3,6 @@ import { Outlet } from 'react-router-dom'
 import { AdminSidebar } from 'src/components'
 
 const AdminLayout = () => {
-  console.log('AdminLayout')
   return (
     <main className='grid grid-cols-12'>
       <div className='col-span-2 bg-main-600 text-white h-full max-h-screen overflow-y-auto'>

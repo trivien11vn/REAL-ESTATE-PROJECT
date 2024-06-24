@@ -2,10 +2,11 @@ import clsx from 'clsx'
 import React from 'react'
 import { twMerge } from 'tailwind-merge'
 
-const InputRadio = ({style = 'form-radio', containerClassname, id, register, errors={}, inputClassname, validate, placeholder, options=[], label}) => {
+const InputRadio = ({style = 'form-radio', containerClassname, optionClassname, id, register, errors={}, inputClassname, validate, placeholder, options=[], label}) => {
   return (
     <div className={twMerge(clsx('flex flex-col gap-2 w-full', containerClassname))}>
         {label && <label className='font-medium text-main-700' htmlFor={id}>{label}</label>}
+        <div className={twMerge(clsx(optionClassname))}>
         {options?.map(el =>(
             <div className='flex items-center gap-4' key={el?.value}>
                 <input 
@@ -20,7 +21,8 @@ const InputRadio = ({style = 'form-radio', containerClassname, id, register, err
                 <label className='cursor-pointer' htmlFor={el?.value}>{el?.label}</label>
             </div>
         ))}
-      {errors[id] && <small className='italic text-red-500'>{errors[id]?.message}</small>}
+        </div>
+        {errors[id] && <small className='italic text-red-500'>{errors[id]?.message}</small>}
     </div>
   )
 }

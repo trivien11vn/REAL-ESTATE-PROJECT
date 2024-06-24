@@ -10,4 +10,8 @@ router.get(
     verifyToken, 
     ctrls.getCurrent), 
 
+router.get(
+    '/roles', 
+    ctrls.getRoles), 
+
 module.exports = router

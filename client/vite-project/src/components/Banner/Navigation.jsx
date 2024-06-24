@@ -12,7 +12,8 @@ import { Login } from '..'
 
 
 const Navigation = ({location, navigate}) => {
-  const {token} = useUserStore()
+  const {current} = useUserStore()
+  console.log(current)
   const {setModal} = useAppStore()
   return (
     <div className={twMerge(
@@ -28,7 +29,7 @@ const Navigation = ({location, navigate}) => {
             {el?.text}
           </NavLink>
         ))}
-        {token ? 
+        {current ? 
         <Button className={twMerge(
           clsx(location?.pathname === '/' && 'bg-transparent border-main-100 border')
         )}>

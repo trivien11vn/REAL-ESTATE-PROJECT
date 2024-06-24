@@ -13,7 +13,7 @@ const Login = ({location, navigate}) => {
   const [variant, setVariant] = useState('login')
   const [isLoading, setIsLoading] = useState(false)
   const {setModal} = useAppStore()
-  const {token, setToken} = useUserStore()
+  const {token, setToken, roles} = useUserStore()
   const {register, formState:{errors}, handleSubmit, reset} = useForm()
   
   const onSubmit = async(data) => {
@@ -37,7 +37,7 @@ const Login = ({location, navigate}) => {
       }
     }
     else if(variant === 'login'){
-      const {name, role, ...payload} = data
+      const {name, roleCode, ...payload} = data
       const response = await apiSignin(payload)
       if(response?.success){
         toast.success(response.mes)
@@ -107,13 +107,14 @@ const Login = ({location, navigate}) => {
         <InputRadio 
           label='Type account' 
           register={register} 
-          id='role' 
+          id='roleCode' 
           validate={{required: 'This field cannot be empty'}}
           errors={errors} 
-          options={[
-            {label: 'User', value: 'USER'},
-            {label: 'Agent', value: 'AGENT'}
-          ]}
+          options={roles?.filter?.(el=>el.code !== '1').map(ell => (
+            {label: ell?.value,
+             value: ell?.code}
+          ))}
+          optionClassname='grid grid-cols-3 gap-4'
         />
         }
         <Button onClick={handleSubmit(onSubmit)} className='py-2 my-6'>{
