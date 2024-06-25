@@ -1,14 +1,17 @@
 import React from 'react'
-import { Button, InputForm, InputText, Title } from 'src/components'
+import { Button, InputFile, InputForm, InputText, TextArea, Title } from 'src/components'
 import { CiSquarePlus } from "react-icons/ci";
 import { useForm } from 'react-hook-form';
 
 const CreatePropertyType = () => {
   const {register, formState: {errors}, handleSubmit, reset, setValue} = useForm()
+  const handleSubmitForm = (data) => {
+    console.log(data)
+  }
   return (
     <div className=''>
       <Title title='Create New Property Type'>
-        <Button>
+        <Button onClick={handleSubmit(handleSubmitForm)}>
           <CiSquarePlus size={20}/>
           <span>Create</span>
         </Button>
@@ -22,12 +25,19 @@ const CreatePropertyType = () => {
           label='Property Type Name'
         />
 
-        <InputText
+        <TextArea
           id='description'
           register={register}
           errors={errors}
-          setValue={setValue}
           label='Description'
+          validate={{required: 'This fill cannot empty'}}
+         />
+
+        <InputFile
+          id='image'
+          register={register}
+          errors={errors}
+          label='Image'
           validate={{required: 'This fill cannot empty'}}
          />
       </form>

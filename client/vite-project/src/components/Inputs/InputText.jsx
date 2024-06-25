@@ -12,7 +12,7 @@ const InputText = ({containerClassname, label, height=500, register, errors, val
         // onInit={(evt, editor) => editorRef.current = editor}
         // initialValue="<p>This is the initial content of the editor.</p>"
         {...register(id, validate)}
-        onChange={e => setValue(id, e.getContent())}
+        onChange={e => setValue(id, e.target.getContent())}
         init={{
           height: {height},
           menubar: true,

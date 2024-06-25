@@ -10,5 +10,7 @@ export {default as Login} from './Login/Login'
 export {default as InputForm} from './Inputs/InputForm'
 export {default as InputRadio} from './Inputs/InputRadio'
 export {default as InputText} from './Inputs/InputText'
+export {default as TextArea} from './Inputs/TextArea'
+export {default as InputFile} from './Inputs/InputFile'
 
 export {default as AdminSidebar} from './Sidebar/AdminSidebar'
