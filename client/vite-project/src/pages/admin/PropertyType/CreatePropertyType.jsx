@@ -34,11 +34,13 @@ const CreatePropertyType = () => {
          />
 
         <InputFile
-          id='image'
+          id='images'
           register={register}
           errors={errors}
           label='Image'
           validate={{required: 'This fill cannot empty'}}
+          multiple={true}
+          getImage={images => setValue('images', images)}
          />
       </form>
     </div>
