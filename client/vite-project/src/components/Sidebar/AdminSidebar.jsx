@@ -1,8 +1,9 @@
 import clsx from 'clsx'
 import React, { Fragment, useState } from 'react'
-import { NavLink } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 import { adminSidebar } from 'src/utils/constant'
 import { IoMdArrowDropright } from "react-icons/io";
+import { FaHome } from "react-icons/fa";
 
 const AdminSidebar = () => {
   const [tabs, setTabs] = useState([])
@@ -67,6 +68,15 @@ const AdminSidebar = () => {
                     </>
                   )
                   }
+                
+              <Link to={'/'} className={clsx('flex items-center gap-2 hover:bg-main-700 hover:border-r-4 border-orange-700 px-4 py-3')}>
+                <span className='text-2xl'>
+                <FaHome />
+                </span>
+                <span className='select-none'>
+                  Home
+                </span>
+              </Link>
                 </Fragment>
               ))
             }

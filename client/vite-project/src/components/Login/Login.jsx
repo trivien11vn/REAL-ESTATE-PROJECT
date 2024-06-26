@@ -8,6 +8,8 @@ import { toast } from 'react-toastify'
 import withRouter from 'src/hocs/withRouter'
 import { useAppStore } from 'src/store/useAppStore'
 import { useUserStore } from 'src/store/useUserStore'
+import { RecaptchaVerifier, signInWithPhoneNumber } from 'firebase/auth'
+import auth from 'src/utils/firebaseConfig'
 
 const Login = ({location, navigate}) => {
   const [variant, setVariant] = useState('login')
@@ -16,25 +18,53 @@ const Login = ({location, navigate}) => {
   const {token, setToken, roles} = useUserStore()
   const {register, formState:{errors}, handleSubmit, reset} = useForm()
   
+  const handleCapcha = () => {
+    console.log(window.recapchaVerify)
+    if(!window.recapchaVerify){
+      window.recapchaVerify = new RecaptchaVerifier(auth, 'recapcha-verifier', {
+        size: 'invisible',
+        callback: response => {
+          // console.log(response);
+        },
+        'expired-callback': (response) => {
+          // console.log(response)
+        }
+      })
+    }
+  }
+  const sendOtp = (phoneNumber) => {
+    handleCapcha()
+    const verifier = window.recapchaVerify
+    const formatPhone = '+84' + phoneNumber.slice(1)
+    signInWithPhoneNumber(auth, formatPhone, verifier)
+    .then((result) => {
+      toast.success('OTP code has been sent to your phone number')
+    }).catch((error) => {
+      toast.error('Something went wrong')
+    });
+  }
   const onSubmit = async(data) => {
     if(variant === 'signup'){
-      setIsLoading(true)
-      const response = await apiRegister(data)
-      setIsLoading(false)
-      if(response?.success){
-        Swal.fire({
-          icon: 'success',
-          title: 'Congratulations! You have successfully registered',
-          text: response.mes,
-          showConfirmButton: true,
-          confirmButtonText: 'Go to sign in'
-        }).then(({isConfirmed}) => { 
-            if(isConfirmed) setVariant('login')
-         })
+      if(data?.roleCode !== '4'){
+        sendOtp(data?.phone)
       }
-      else{
-        toast.error(response.mes)
-      }
+      // setIsLoading(true)
+      // const response = await apiRegister(data)
+      // setIsLoading(false)
+      // if(response?.success){
+      //   Swal.fire({
+      //     icon: 'success',
+      //     title: 'Congratulations! You have successfully registered',
+      //     text: response.mes,
+      //     showConfirmButton: true,
+      //     confirmButtonText: 'Go to sign in'
+      //   }).then(({isConfirmed}) => { 
+      //       if(isConfirmed) setVariant('login')
+      //    })
+      // }
+      // else{
+      //   toast.error(response.mes)
+      // }
     }
     else if(variant === 'login'){
       const {name, roleCode, ...payload} = data
@@ -57,7 +87,6 @@ const Login = ({location, navigate}) => {
     reset()
   }, [variant])
   
-  console.log(token)
   return (
     <div onClick={(e)=>e.stopPropagation()} 
         className='bg-white rounded-md px-6 py-8 flex flex-col items-center gap-6 w-[550px] text-lg'>
@@ -65,6 +94,7 @@ const Login = ({location, navigate}) => {
       <div className='flex justify-start w-full gap-6 border-b '>
         <span onClick={()=> setVariant('login')} className={clsx(variant==='login'&& 'border-b-4 border-main-700', 'cursor-pointer')}>Sign in</span>
         <span onClick={()=> setVariant('signup')} className={clsx(variant==='signup'&& 'border-b-4 border-main-700', 'cursor-pointer')}>New account</span>
+        <div id='recapcha-verifier'></div>
       </div>
       <form className='flex flex-col gap-4 w-full px-4'>
         <InputForm 
