@@ -1,10 +1,35 @@
 import clsx from 'clsx'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { FaCloudUploadAlt } from "react-icons/fa";
+import { useForm } from 'react-hook-form';
+import { apiUploadImage } from 'src/apis/beyond';
 
 
-const InputFile = ({ containerClassname, label, id, register, errors={}, inputClassname, validate, placeholder}) => {
+const InputFile = ({ containerClassname, label, id, inputClassname, validate, placeholder}) => {
+  const {register, formState:{errors}, watch} = useForm()
+  const rawImages = watch(id) 
+
+  const handleUpload = async(files) => {
+    const formData = new FormData()
+    for (let i = 0; i < files.length; i++) {
+      let file = files[i];
+      formData.append('file', file);
+      formData.append('upload_preset', import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET);
+    }
+    const response = await apiUploadImage(formData)
+    console.log(response)
+  }
+
+  useEffect(() => {
+    if(rawImages && rawImages instanceof FileList && rawImages.length > 0) {
+      handleUpload(rawImages)
+    }
+    else{
+
+    }
+  }, [rawImages])
+  
   return (
     <div className={twMerge(clsx('flex flex-col gap-2 w-full', containerClassname))}>
     {label && <span className='font-medium text-main-700'>{label}</span>}
