@@ -10,7 +10,7 @@ router.use(rateLimit)
 router.post(
     '/',
     verifyToken,
-    isAdmin, 
+    // isAdmin, 
     validateDto(Joi.object({
         name: stringReq,
         description: stringReq,

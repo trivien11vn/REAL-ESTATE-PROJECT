@@ -1,5 +1,5 @@
 import axios from '../axios'
-export const apiGetCurrent = (data) => axios({
+export const apiGetCurrent = () => axios({
     method: 'GET',
     url: '/user/current'
 })
