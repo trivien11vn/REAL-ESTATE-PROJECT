@@ -14,3 +14,5 @@ export {default as TextArea} from './Inputs/TextArea'
 export {default as InputFile} from './Inputs/InputFile'
 
 export {default as AdminSidebar} from './Sidebar/AdminSidebar'
+
+export {default as OTPVerifier} from './Auth/OTPVerifier'

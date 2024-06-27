@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 import React, { useEffect, useState } from 'react'
-import { Button, InputForm, InputRadio } from '..'
+import { Button, InputForm, InputRadio, OTPVerifier } from '..'
 import { useForm } from 'react-hook-form'
 import { apiRegister, apiSignin } from 'src/apis/auth'
 import Swal from 'sweetalert2'
@@ -10,36 +10,35 @@ import { useAppStore } from 'src/store/useAppStore'
 import { useUserStore } from 'src/store/useUserStore'
 import { RecaptchaVerifier, signInWithPhoneNumber } from 'firebase/auth'
 import auth from 'src/utils/firebaseConfig'
+import { twMerge } from 'tailwind-merge'
 
 const Login = ({location, navigate}) => {
   const [variant, setVariant] = useState('login')
   const [isLoading, setIsLoading] = useState(false)
   const {setModal} = useAppStore()
   const {token, setToken, roles} = useUserStore()
+
+  const [isShowOTP, setIsShowOTP] = useState(false)
   const {register, formState:{errors}, handleSubmit, reset} = useForm()
   
+  //Create capcha
   const handleCapcha = () => {
-    console.log(window.recapchaVerify)
     if(!window.recapchaVerify){
-      window.recapchaVerify = new RecaptchaVerifier(auth, 'recapcha-verifier', {
-        size: 'invisible',
-        callback: response => {
-          // console.log(response);
-        },
-        'expired-callback': (response) => {
-          // console.log(response)
-        }
-      })
+      window.recapchaVerify = new RecaptchaVerifier(auth, 'recapcha-verifier')
     }
   }
   const sendOtp = (phoneNumber) => {
+    setIsLoading(true)
     handleCapcha()
     const verifier = window.recapchaVerify
     const formatPhone = '+84' + phoneNumber.slice(1)
     signInWithPhoneNumber(auth, formatPhone, verifier)
     .then((result) => {
+      setIsLoading(false)
       toast.success('OTP code has been sent to your phone number')
+      setIsShowOTP(true)
     }).catch((error) => {
+      setIsLoading(false)
       toast.error('Something went wrong')
     });
   }
@@ -89,7 +88,12 @@ const Login = ({location, navigate}) => {
   
   return (
     <div onClick={(e)=>e.stopPropagation()} 
-        className='bg-white rounded-md px-6 py-8 flex flex-col items-center gap-6 w-[550px] text-lg'>
+        className={twMerge(clsx('bg-white relative rounded-md px-6 py-8 flex flex-col items-center gap-6 w-[550px] text-lg', isShowOTP && 'w-[600px] h-[350px]'))}>
+         {isShowOTP &&
+          <div className='absolute inset-0 bg-white rounded-md'>
+            <OTPVerifier />
+          </div>
+         }
       <h1 className='text-5xl font-agbalumo font-semibold text-main-700'>Welcome to Tvien1411</h1>
       <div className='flex justify-start w-full gap-6 border-b '>
         <span onClick={()=> setVariant('login')} className={clsx(variant==='login'&& 'border-b-4 border-main-700', 'cursor-pointer')}>Sign in</span>
@@ -147,7 +151,7 @@ const Login = ({location, navigate}) => {
           optionClassname='grid grid-cols-3 gap-4'
         />
         }
-        <Button onClick={handleSubmit(onSubmit)} className='py-2 my-6'>{
+        <Button disabled={isLoading} onClick={handleSubmit(onSubmit)} className='py-2 my-6'>{
           variant==='login'?'Sign in':'Sign Up'
         }</Button>
         <span className='cursor-pointer text-main-500 hover:underline w-full text-center'>
