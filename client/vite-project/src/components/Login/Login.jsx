@@ -24,7 +24,16 @@ const Login = ({location, navigate}) => {
   //Create capcha
   const handleCapcha = () => {
     if(!window.recapchaVerify){
-      window.recapchaVerify = new RecaptchaVerifier(auth, 'recapcha-verifier')
+      window.recapchaVerify = new RecaptchaVerifier(auth, 'recapcha-verifier', 
+        {
+        size: 'invisible',
+        callback: response => {
+          // console.log(response);
+        },
+        'expired-callback': (response) => {
+          // console.log(response)
+        }
+        })
     }
   }
   const sendOtp = (phoneNumber) => {
@@ -36,10 +45,12 @@ const Login = ({location, navigate}) => {
     .then((result) => {
       setIsLoading(false)
       toast.success('OTP code has been sent to your phone number')
+      window.confirmationResult = result
       setIsShowOTP(true)
     }).catch((error) => {
       setIsLoading(false)
       toast.error('Something went wrong')
+      window.isSentOTP = false
     });
   }
   const onSubmit = async(data) => {
@@ -47,23 +58,27 @@ const Login = ({location, navigate}) => {
       if(data?.roleCode !== '4'){
         sendOtp(data?.phone)
       }
-      // setIsLoading(true)
-      // const response = await apiRegister(data)
-      // setIsLoading(false)
-      // if(response?.success){
-      //   Swal.fire({
-      //     icon: 'success',
-      //     title: 'Congratulations! You have successfully registered',
-      //     text: response.mes,
-      //     showConfirmButton: true,
-      //     confirmButtonText: 'Go to sign in'
-      //   }).then(({isConfirmed}) => { 
-      //       if(isConfirmed) setVariant('login')
-      //    })
-      // }
-      // else{
-      //   toast.error(response.mes)
-      // }
+      else{
+        const response = await apiRegister(data)
+        setIsLoading(false)
+        if(response?.success){
+          Swal.fire({
+            icon: 'success',
+            title: 'Congratulations! You have successfully registered',
+            text: response.mes,
+            showConfirmButton: true,
+            confirmButtonText: 'Go to sign in'
+          }).then(({isConfirmed}) => { 
+              if(isConfirmed) {
+                setVariant('login')
+                setIsShowOTP(false)
+              }
+            })
+        }
+        else{
+          toast.error(response.mes)
+        }
+      }
     }
     else if(variant === 'login'){
       const {name, roleCode, ...payload} = data
@@ -85,22 +100,45 @@ const Login = ({location, navigate}) => {
   useEffect(() => {
     reset()
   }, [variant])
+
+  const handleRegister = async(data) => {
+    console.log(data)
+    const response = await apiRegister(data)
+    setIsLoading(false)
+    if(response?.success){
+      Swal.fire({
+        icon: 'success',
+        title: 'Congratulations! You have successfully registered',
+        text: response.mes,
+        showConfirmButton: true,
+        confirmButtonText: 'Go to sign in'
+      }).then(({isConfirmed}) => { 
+          if(isConfirmed) {
+            setVariant('login')
+            setIsShowOTP(false)
+          }
+        })
+    }
+    else{
+      toast.error(response.mes)
+    }
+  }
   
   return (
     <div onClick={(e)=>e.stopPropagation()} 
         className={twMerge(clsx('bg-white relative rounded-md px-6 py-8 flex flex-col items-center gap-6 w-[550px] text-lg', isShowOTP && 'w-[600px] h-[350px]'))}>
          {isShowOTP &&
           <div className='absolute inset-0 bg-white rounded-md'>
-            <OTPVerifier />
+            <OTPVerifier cb = {handleSubmit(handleRegister)} />
           </div>
          }
       <h1 className='text-5xl font-agbalumo font-semibold text-main-700'>Welcome to Tvien1411</h1>
-      <div className='flex justify-start w-full gap-6 border-b '>
+      <div className={twMerge(clsx('flex justify-start w-full gap-6 border-b', isShowOTP && 'hidden'))}>
         <span onClick={()=> setVariant('login')} className={clsx(variant==='login'&& 'border-b-4 border-main-700', 'cursor-pointer')}>Sign in</span>
         <span onClick={()=> setVariant('signup')} className={clsx(variant==='signup'&& 'border-b-4 border-main-700', 'cursor-pointer')}>New account</span>
         <div id='recapcha-verifier'></div>
       </div>
-      <form className='flex flex-col gap-4 w-full px-4'>
+      <form className={twMerge(clsx('flex flex-col gap-4 w-full px-4', isShowOTP && 'hidden'))}>
         <InputForm 
           label='Phone Number' 
           inputClassname='rounded-md' 
