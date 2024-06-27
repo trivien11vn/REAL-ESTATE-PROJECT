@@ -10,26 +10,26 @@ module.exports = {
         {
             code: '1',
             value: 'Admin',
-            createdAt: Date.now(),
-            updatedAt: Date.now()
+            createdAt: new Date(),
+            updatedAt: new Date()
         },
         {
             code: '2',
             value: 'Owner',
-            createdAt: Date.now(),
-            updatedAt: Date.now()
+            createdAt: new Date(),
+            updatedAt: new Date()
         },
         {
             code: '3',
             value: 'Agent',
-            createdAt: Date.now(),
-            updatedAt: Date.now()
+            createdAt: new Date(),
+            updatedAt: new Date()
         },
         {
             code: '4',
             value: 'User',
-            createdAt: Date.now(),
-            updatedAt: Date.now()
+            createdAt: new Date(),
+            updatedAt: new Date()
         }
     ],
     users: Array.from([...Array(10).keys()]).map(() => ({
@@ -42,29 +42,29 @@ module.exports = {
         address: faker.location.streetAddress({ useFullAddress: true }),
         password: hashPassword('123456'),
         avatar: faker.image.avatar(),
-        createdAt: Date.now(),
-        updatedAt: Date.now()
+        createdAt: new Date(),
+        updatedAt: new Date()
     })),
     user_roles: [...Array.from([...Array(10).keys()]).map((el) => ({
         userId: el + 1,
         roleCode: '4',
-        createdAt: Date.now(),
-        updatedAt: Date.now()
+        createdAt: new Date(),
+        updatedAt: new Date()
     })), {
         userId: 8,
         roleCode: '3', //Agent
-        createdAt: Date.now(),
-        updatedAt: Date.now()
+        createdAt: new Date(),
+        updatedAt: new Date()
     }, {
         userId: 9,
         roleCode: '2', //Owner
-        createdAt: Date.now(),
-        updatedAt: Date.now()
+        createdAt: new Date(),
+        updatedAt: new Date()
     }, {
         userId: 10,
         roleCode: '1', //Admin
-        createdAt: Date.now(),
-        updatedAt: Date.now()
+        createdAt: new Date(),
+        updatedAt: new Date()
     }]
 }
 

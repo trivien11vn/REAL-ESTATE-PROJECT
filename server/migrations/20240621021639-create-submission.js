@@ -7,17 +7,17 @@ module.exports = {
         allowNull: false,
         primaryKey: true,
         type: Sequelize.INTEGER,
-        autoIncrement
+        autoIncrement: true
       },
       propertyId: {
-        type: Sequelize.UUID,
+        type: Sequelize.INTEGER,
         references:{
           model: 'Properties',
           key: 'id'
         }
       },
       uid: {
-        type: Sequelize.UUID,
+        type: Sequelize.INTEGER,
         references:{
           model: 'Users',
           key: 'id'
