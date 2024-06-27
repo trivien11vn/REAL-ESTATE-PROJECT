@@ -13,6 +13,18 @@ const path = {
     MANAGE_PROPERTY_TYPE: 'manage_property_type',
     CREATE_PROPERTY_TYPE: 'create_property_type',
 
+    //USER
+    USER_LAYOUT: 'user',
+    PERSONAL: 'personal',
+
+    //AGENT
+    AGENT_LAYOUT: 'agent',
+    DASHBOARD_1: 'dashboard-1',
+
+    //OWNER
+    OWNER_LAYOUT: 'owner',
+    DASHBOARD_2: 'dashboard-2',
+
 }
 
 export default path

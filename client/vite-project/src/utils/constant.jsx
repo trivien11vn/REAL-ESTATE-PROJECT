@@ -60,3 +60,31 @@ export const adminSidebar = [
    
 ]
 
+export const showOption = [
+    {
+        id: 1,
+        name: 'Personal',
+        code: '4',
+        path: `/${path.USER_LAYOUT}/${path.PERSONAL}`,
+    },
+    {
+        id: 2,
+        name: 'Agent',
+        code: '3',
+        path: `/${path.AGENT_LAYOUT}/${path.DASHBOARD_1}`,
+    },
+    {
+        id: 3,
+        name: 'Owner',
+        code: '2',
+        path: `/${path.OWNER_LAYOUT}/${path.DASHBOARD_2}`,
+    },
+    {
+        id: 4,
+        name: 'Admin',
+        code: '1',
+        path: `/${path.ADMIN_LAYOUT}/${path.DASHBOARD}`,
+    },
+   
+]
+

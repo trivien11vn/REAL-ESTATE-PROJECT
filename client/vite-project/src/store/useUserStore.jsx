@@ -26,7 +26,8 @@ export const useUserStore = create(persist(
                 else{
                     return set(() => ({roles: []}))
                 }
-            }
+            },
+            logout: () => set(() => ({token: null,current: null}))
         }
     ),
     {
