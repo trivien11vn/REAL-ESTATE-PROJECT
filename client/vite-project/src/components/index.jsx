@@ -4,6 +4,7 @@ export {default as TopHeader} from './Banner/TopHeader'
 export {default as Button} from './Common/Button'
 export {default as Modal} from './Common/Modal'
 export {default as Title} from './Common/Title'
+export {default as BreadCrumb} from './Common/BreadCrumb'
 
 export {default as Login} from './Login/Login'
 
