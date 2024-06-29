@@ -1,4 +1,5 @@
 import React from 'react'
+import { Search } from 'src/components'
 const Home = () => {
   return (
     <div className='bg-white w-full '>
@@ -12,6 +13,7 @@ const Home = () => {
             </span>
           </div>
       </div>
+      <Search />
       <div className='w-main mx-auto'>
         contain
       </div>

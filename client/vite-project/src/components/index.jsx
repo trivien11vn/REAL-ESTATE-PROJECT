@@ -12,7 +12,11 @@ export {default as InputRadio} from './Inputs/InputRadio'
 export {default as InputText} from './Inputs/InputText'
 export {default as TextArea} from './Inputs/TextArea'
 export {default as InputFile} from './Inputs/InputFile'
+export {default as InputSelect} from './Inputs/InputSelect'
 
 export {default as AdminSidebar} from './Sidebar/AdminSidebar'
 
 export {default as OTPVerifier} from './Auth/OTPVerifier'
+
+export {default as Search} from './Search/Search'
+export {default as SearchItem} from './Search/SearchItem'
