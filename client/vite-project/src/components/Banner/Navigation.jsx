@@ -13,7 +13,6 @@ import { Login } from '..'
 
 const Navigation = ({location, navigate}) => {
   const {current} = useUserStore()
-  console.log(current)
   const {setModal} = useAppStore()
   return (
     <div className={twMerge(

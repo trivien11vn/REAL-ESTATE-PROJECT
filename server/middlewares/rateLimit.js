@@ -7,7 +7,6 @@ const rateLimit = async(req, res, next) => {
     const currentTime = Date.now()  // Return mili seconds
     const client = await redis.hGetAll(`rateLimit-${clientId}`)
 
-    console.log(client)
     if(Object.keys(client).length === 0){
         await redis.hSet(`rateLimit-${clientId}`,'createdAt', currentTime)
         await redis.hSet(`rateLimit-${clientId}`,'count', 1)

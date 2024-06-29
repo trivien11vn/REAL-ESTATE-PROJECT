@@ -19,5 +19,7 @@ export {default as AdminSidebar} from './Sidebar/AdminSidebar'
 
 export {default as OTPVerifier} from './Auth/OTPVerifier'
 
+export {default as PropertyCard} from './Property/PropertyCard'
+
 export {default as Search} from './Search/Search'
 export {default as SearchItem} from './Search/SearchItem'

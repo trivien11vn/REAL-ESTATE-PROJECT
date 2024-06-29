@@ -81,8 +81,8 @@ const getPropertyType = asyncHandler(async (req, res) => {
             ...options,
         })
         return res.json({
-            success: response.length > 0 ? true : false,
-            mes: response.length > 0 ? 'Got successfully' : 'Cannot get',
+            success: Boolean(response),
+            mes: response ? 'Got successfully' : 'Cannot get',
             propertyType: response
         })
     }
@@ -103,7 +103,6 @@ const updatePropertyType = asyncHandler(async (req, res, next) => {
 const removePropertyType = asyncHandler(async (req, res, next) => {
     const {id} = req.params
     const response = await db.PropertyType.destroy({where: {id}})
-    console.log(response)
     return res.json({
         success: response > 0,
         mes: response > 0 ? 'Deleted successfully' : 'Cannot delete'

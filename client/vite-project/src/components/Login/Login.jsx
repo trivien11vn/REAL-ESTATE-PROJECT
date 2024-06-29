@@ -28,10 +28,8 @@ const Login = ({location, navigate}) => {
         {
         size: 'invisible',
         callback: response => {
-          // console.log(response);
         },
         'expired-callback': (response) => {
-          // console.log(response)
         }
         })
     }
@@ -102,7 +100,6 @@ const Login = ({location, navigate}) => {
   }, [variant])
 
   const handleRegister = async(data) => {
-    console.log(data)
     const response = await apiRegister(data)
     setIsLoading(false)
     if(response?.success){
