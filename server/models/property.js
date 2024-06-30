@@ -11,10 +11,13 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Property.belongsTo(models.User, {foreignKey: 'postedBy', as: 'rPostedBy'})
+      Property.belongsTo(models.User, {foreignKey: 'owner', as: 'rOwner'})
     }
   }
   Property.init({
     name: DataTypes.STRING,
+    address: DataTypes.STRING,
     description: DataTypes.TEXT,
     listingType: {
       type: DataTypes.ENUM,

@@ -111,6 +111,7 @@ module.exports = {
     properties: Array.from([...Array(60).keys()]).map((el) => (
         {
             name: faker.lorem.sentences({ max: 1, min: 1}).replace('.', ''),
+            address: faker.location.streetAddress({ useFullAddress: true }),
             description: faker.lorem.sentences({ min: 5, max: 10 }),
             listingType: faker.helpers.arrayElement(listingTypes),
             price: faker.number.int({ min: 1000, max: 100000 }),
