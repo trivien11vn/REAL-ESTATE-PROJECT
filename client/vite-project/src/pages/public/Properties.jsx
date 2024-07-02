@@ -2,7 +2,7 @@ import clsx from 'clsx'
 import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { apiGetProperty } from 'src/apis/property'
-import { BreadCrumb, Button, InputSelect, PropertyCard } from 'src/components'
+import { BreadCrumb, Button, InputSelect, Pagination, PropertyCard } from 'src/components'
 import { twMerge } from 'tailwind-merge'
 
 const Properties = () => {
@@ -64,6 +64,10 @@ const Properties = () => {
               <PropertyCard key={el?.id} property={el}/>
             ))
           }
+        </div>
+
+        <div className='flex items-center justify-center my-4'>
+          <Pagination/>
         </div>
       </div>
     </div>

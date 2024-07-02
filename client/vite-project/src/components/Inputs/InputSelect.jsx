@@ -13,8 +13,8 @@ const InputSelect = ({style = 'form-select', containerClassname, label, id, type
         {...register(id, validate)}  
       >
         <option value=''>{placeholder}</option>
-        {options.map(el => (
-            <option key={el?.code} value={el?.code}>{el?.label}</option>
+        {options.map((el,idx) => (
+            <option key={idx} value={el?.code}>{el?.label}</option>
         ))}
       </select>
       {errors[id] && <small className='italic text-red-500'>{errors[id]?.message}</small>}
