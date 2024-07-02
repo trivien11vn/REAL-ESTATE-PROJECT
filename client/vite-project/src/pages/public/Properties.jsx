@@ -1,6 +1,8 @@
 import clsx from 'clsx'
 import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
+import { useSearchParams } from 'react-router-dom'
+import { toast } from 'react-toastify'
 import { apiGetProperty } from 'src/apis/property'
 import { BreadCrumb, Button, InputSelect, Pagination, PropertyCard } from 'src/components'
 import { twMerge } from 'tailwind-merge'
@@ -11,18 +13,25 @@ const Properties = () => {
   const [properties, setProperties] = useState()
   const {register, formState:{errors}, watch} = useForm()
   const sort = watch('sort')
+  const [searchParams] = useSearchParams()
 
   useEffect(() => {
-    const fetchProperties = async() => { 
-      const response = await apiGetProperty({limit: 9})
-      console.log(response)
+    const fetchProperties = async(params) => { 
+      const response = await apiGetProperty({
+        limit: 9,
+        ...params
+      })
       if(response?.success){
-        setProperties(response?.property?.rows)
+        setProperties(response?.property)
+      }
+      else{
+        toast.error(response?.mes)
       }
     }
-    fetchProperties()
-    console.log(properties)
-  }, [])
+    const params = Object.fromEntries([...searchParams])
+    console.log(params)
+    fetchProperties(params)
+  }, [searchParams])
   
   return (
     <div className='w-full'>
@@ -60,14 +69,18 @@ const Properties = () => {
         </div>
         <div className='w-full grid grid-cols-3 gap-4'>
           {
-            properties?.map(el => (
+            properties?.rows?.map(el => (
               <PropertyCard key={el?.id} property={el}/>
             ))
           }
         </div>
 
         <div className='flex items-center justify-center my-4'>
-          <Pagination/>
+          <Pagination 
+            total={properties?.count}
+            limit={properties?.limit}
+            page={properties?.page}
+          />
         </div>
       </div>
     </div>

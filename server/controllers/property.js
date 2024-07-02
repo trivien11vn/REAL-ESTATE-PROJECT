@@ -94,7 +94,7 @@ const getProperty = asyncHandler(async (req, res) => {
         return res.json({
             success: Boolean(response),
             mes: response ? 'Got successfully' : 'Cannot get',
-            property: response
+            property: response ? {...response, limit: +limit, page: +page ? +page : 1} : null
         })
     }
 })

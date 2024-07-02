@@ -22,7 +22,7 @@ const rateLimit = async(req, res, next) => {
             return next()
         }
         else{
-            if(client?.count > process.env.RATE_LIMIT_COUNT){
+            if(+client?.count > +process.env.RATE_LIMIT_COUNT){
                 return res.status(429).json({
                     success: false,
                     mes: 'Rate limit exceeded'

@@ -21,11 +21,11 @@ const usePagination = ({total = 0, currentPage = 1, limit = 1, sibling = 0}) => 
     if(isShowLeft && !isShowRight){
       const rightStart = totalPages - 2 - sibling * 2
       const rightArray = renderRangeNumber(rightStart, totalPages)
-      return [1, <BsThreeDots />, ...rightArray]
+      return [1, <BsThreeDots size={20}/>, ...rightArray]
     }
     if(!isShowLeft && isShowRight){
       const leftArray = renderRangeNumber(1, 3 + sibling * 2)
-      return [...leftArray, <BsThreeDots />, totalPages] 
+      return [...leftArray, <BsThreeDots size={20}/>, totalPages] 
     }
      
     //
@@ -34,7 +34,7 @@ const usePagination = ({total = 0, currentPage = 1, limit = 1, sibling = 0}) => 
     
     if(isShowLeft && isShowRight){
       const middleArray = renderRangeNumber(siblingLeft, siblingRight)
-      return [1,<BsThreeDots />, ...middleArray, <BsThreeDots />, totalPages]
+      return [1,<BsThreeDots size={20}/>, ...middleArray, <BsThreeDots size={20}/>, totalPages]
     }
    },[total, limit, currentPage, sibling])
 

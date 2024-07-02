@@ -3,9 +3,11 @@ import React from 'react'
 import { Outlet } from 'react-router-dom'
 import { Navigation, TopHeader } from 'src/components'
 import withRouter from 'src/hocs/withRouter'
+import { useAppStore } from 'src/store/useAppStore'
+import { twMerge } from 'tailwind-merge'
 
 const PublicLayout = ({location}) => {
-
+  
   return (
     <main>
       <TopHeader />
