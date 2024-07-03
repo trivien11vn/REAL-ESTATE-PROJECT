@@ -68,7 +68,7 @@ const getPropertyType = asyncHandler(async (req, res) => {
         const response = await db.PropertyType.findAll({...filter})
 
         redis.set(keys, JSON.stringify(response))
-        redis.expireAt(keys, parseInt((+new Date)/1000) + 30)
+        redis.expireAt(keys, parseInt((+new Date)/1000) + 86400)
         return res.json({
             success: response.length > 0 ? true : false,
             mes: response.length > 0 ? 'Got successfully' : 'Cannot get',

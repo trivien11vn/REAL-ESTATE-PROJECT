@@ -19,7 +19,7 @@ const App = () => {
     getCurrent()
     getRoles()
     getPropertyTypes({
-      fields: 'id'
+      fields: 'id,name,image'
     })
   }, [token])
   

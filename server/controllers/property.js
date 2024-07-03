@@ -1,7 +1,8 @@
 // register + login
 const asyncHandler = require('express-async-handler');
 const db = require('../models');
-const redis = require('../config/redis.config')
+const redis = require('../config/redis.config');
+const { Sequelize } = require('sequelize');
 
 const createNewProperty = asyncHandler(async (req, res) => {
     const {uid, role} = req.user; 
@@ -38,7 +39,7 @@ const getProperty = asyncHandler(async (req, res) => {
 
     // Filter by client
     if(address){
-        query.address = Sequelize.where(Sequelize.fn('LOWER', Sequelize.col('address')), 'LIKE', '%' + address.toLocaleLowerCase() + '%') 
+        query.address = Sequelize.where(Sequelize.fn('LOWER', Sequelize.col('Property.address')), 'LIKE', '%' + address.toLocaleLowerCase() + '%') 
     }
 
     //Sorting

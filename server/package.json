@@ -4,13 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-  "dev": "nodemon index.js",
-  "start": "node index.js",
-  "migrate:up": "npx sequelize-cli db:migrate",
-  "migrate:undo": "npx sequelize-cli db:migrate:undo",
-  "seed": "npx sequelize-cli db:seed:all",
-  "sleep5s": "node -e \"setTimeout(() => process.exit(0), 5000)\"",
-  "init": "npm run migrate:up && npm run sleep5s && npm run seed"
+    "dev": "nodemon index.js",
+    "start": "node index.js",
+    "migrate:up": "npx sequelize-cli db:migrate",
+    "migrate:undo": "npx sequelize-cli db:migrate:undo",
+    "seed": "npx sequelize-cli db:seed:all",
+    "sleep5s": "node -e \"setTimeout(() => process.exit(0), 5000)\"",
+    "init": "npm run migrate:up && npm run sleep5s && npm run seed"
   },
   "author": "",
   "license": "ISC",
@@ -20,6 +20,7 @@
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "express-async-handler": "^1.2.0",
+    "express-useragent": "^1.0.15",
     "joi": "^17.13.1",
     "jsonwebtoken": "^9.0.2",
     "pg": "^8.12.0",
