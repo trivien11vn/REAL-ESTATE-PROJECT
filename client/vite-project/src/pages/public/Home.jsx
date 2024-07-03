@@ -14,7 +14,7 @@ const Home = () => {
           </div>
       </div>
       <Search />
-      <div className='w-main mx-auto'>
+      <div className='w-main mx-auto h-[500px]'>
         contain
       </div>
     </div>

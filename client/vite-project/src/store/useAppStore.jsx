@@ -4,6 +4,6 @@ export const useAppStore = create((set) => (
     {
         isShowModal: false,
         contentModal: null,
-        setModal: (isShowModal, contentModal) => set(() => ({isShowModal, contentModal})) 
+        setModal: (isShowModal, contentModal) => set(() => ({isShowModal, contentModal})) ,
     }
 ))

@@ -29,7 +29,6 @@ const Properties = () => {
       }
     }
     const params = Object.fromEntries([...searchParams])
-    console.log(params)
     fetchProperties(params)
   }, [searchParams])
   

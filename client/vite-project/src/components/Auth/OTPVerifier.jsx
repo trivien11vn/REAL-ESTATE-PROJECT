@@ -7,10 +7,8 @@ const OTPVerifier = ({phone, cb}) => {
 
     const [isLoading, setIsLoading] = useState(false)
     const handleConfirmOTP = () => { 
-      console.log('abc')
       setIsLoading(true)
       window.confirmationResult.confirm(otp).then(result => {
-        console.log(result)
         setIsLoading(false)
         cb()
       }).catch(err => {

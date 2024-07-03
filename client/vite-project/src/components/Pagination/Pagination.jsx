@@ -20,7 +20,6 @@ const Pagination = ({total, limit, page, sibling, navigate, location}) => {
     })
   }
   const handleChangeNextPage = () => {
-    console.log(page, total, limit)
     if(+page >= Math.ceil(+total / +limit)) return
     navigate({
       pathname: location?.pathname,

@@ -1,3 +1,4 @@
+import { apiGetAllPropertyType } from 'src/apis/propertyType'
 import { apiGetCurrent, apiGetRole } from 'src/apis/user'
 import { create } from 'zustand'
 import { persist, createJSONStorage } from 'zustand/middleware'

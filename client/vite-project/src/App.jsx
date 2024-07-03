@@ -9,13 +9,18 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useUserStore } from './store/useUserStore'
 import { AdminLayout, CreatePropertyType, DashBoard, ManagePropertyType } from './pages/admin'
 import { Personal, UserLayout } from './pages/user'
+import { usePropertiesStore } from './store/usePropertiesStore'
 
 const App = () => {
   const {isShowModal} = useAppStore()
   const {getCurrent, current, token, getRoles} = useUserStore()
+  const {getPropertyTypes} = usePropertiesStore()
   useEffect(() => {
     getCurrent()
     getRoles()
+    getPropertyTypes({
+      fields: 'id'
+    })
   }, [token])
   
   
