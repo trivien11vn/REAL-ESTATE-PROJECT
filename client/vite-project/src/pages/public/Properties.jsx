@@ -4,8 +4,10 @@ import { useForm } from 'react-hook-form'
 import { useSearchParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { apiGetProperty } from 'src/apis/property'
-import { BreadCrumb, Button, InputSelect, Pagination, PropertyCard } from 'src/components'
+import { BreadCrumb, Button, InputSelect, Pagination, PropertyCard, Search } from 'src/components'
 import { twMerge } from 'tailwind-merge'
+import { CiBoxList } from "react-icons/ci";
+import { useAppStore } from 'src/store/useAppStore'
 
 const Properties = () => {
   //trong useeffect ko duoc goi bat dong bo
@@ -14,6 +16,7 @@ const Properties = () => {
   const {register, formState:{errors}, watch} = useForm()
   const sort = watch('sort')
   const [searchParams] = useSearchParams()
+  const {setModal} = useAppStore()
 
   useEffect(() => {
     const fetchProperties = async(params) => { 
@@ -29,8 +32,11 @@ const Properties = () => {
       }
     }
     const params = Object.fromEntries([...searchParams])
+    if(sort){
+      params.sort = sort
+    }
     fetchProperties(params)
-  }, [searchParams])
+  }, [searchParams, sort])
   
   return (
     <div className='w-full'>
@@ -45,21 +51,26 @@ const Properties = () => {
       </div>
       <div className='w-main mx-auto my-24'>
         <div className='my-4 flex justify-between text-base items-center'>
-          <InputSelect 
-            register={register}
-            id='sort'
-            errors={errors}
-            options={[
-              {value: '-createdAt', label: 'Lastest'},
-              {value: 'createdAt', label: 'Oldest'},
-              {value: 'name', label: 'A - Z'},
-              {value: '-name', label: 'Z - A'}
-            ]}
-            inputClassname='w-fit rounded-md'
-            label='Sort: '
-            placeholder= 'Select sort type'
-            containerClassname='flex-row  items-center'
-          />
+          <div className='flex items-center gap-4'>
+            <span onClick={() => setModal(true, <Search direction='vertical'/>)} className='cursor-pointer'>
+              <CiBoxList size={24}/>
+            </span>
+            <InputSelect 
+              register={register}
+              id='sort'
+              errors={errors}
+              options={[
+                {value: '-createdAt', label: 'Lastest'},
+                {value: 'createdAt', label: 'Oldest'},
+                {value: 'name', label: 'A - Z'},
+                {value: '-name', label: 'Z - A'}
+              ]}
+              inputClassname='w-fit rounded-md'
+              label='Sort by: '
+              placeholder= 'Select sort type'
+              containerClassname='flex-row  items-center'
+            />
+          </div>
           <div className='flex gap-2 items-center'>
             <Button onClick={()=> setMode('ALL')} className={twMerge(clsx('whitespace-nowrap bg-transparent text-black font-medium', mode === 'ALL' && 'font-bold'))}>All properties</Button>
             <Button onClick={()=> setMode('SALE')} className={twMerge(clsx('whitespace-nowrap bg-transparent text-black font-medium',  mode === 'SALE' && 'font-bold'))}>For sale</Button>
