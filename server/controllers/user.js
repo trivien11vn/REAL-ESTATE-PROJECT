@@ -23,7 +23,6 @@ const getCurrent = asyncHandler(async (req, res) => {
                         model: db.Role,
                         as: 'roleName',
                         attributes: ['value'],
-                        nest: false
                     }
                 ]
             }

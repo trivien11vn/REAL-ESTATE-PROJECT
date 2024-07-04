@@ -1,15 +1,16 @@
 import React, { useEffect } from 'react'
-import { Login } from 'src/components'
+import { Login, UserSidebar } from 'src/components'
 import withRouter from 'src/hocs/withRouter'
 import { useAppStore } from 'src/store/useAppStore'
 import { useUserStore } from 'src/store/useUserStore'
 import path from 'src/utils/path'
 import Swal from 'sweetalert2'
+import Personal from './Personal'
+import { Outlet } from 'react-router-dom'
 
 const UserLayout = ({navigate, location}) => {
   const {current} = useUserStore()
   const {setModal} = useAppStore()
-  console.log(current)
   useEffect(() => {
     if(!current || !current?.userRoles?.some(el => el.roleCode === '4')){
       Swal.fire({
@@ -23,9 +24,7 @@ const UserLayout = ({navigate, location}) => {
         cancelButtonColor: 'orange',
         confirmButtonColor: 'green',
       }).then((response) => { 
-        console.log(response)
         if(response.isConfirmed){
-          console.log('aa')
           setModal(true, <Login />)
         }
         else if (response.dismiss === Swal.DismissReason.cancel) {
@@ -40,8 +39,9 @@ const UserLayout = ({navigate, location}) => {
     <>
     {
       current?.userRoles?.some(el => el.roleCode === '4') && 
-      <div>
-        User Layout
+      <div className='w-full grid grid-cols-12 min-h-screen max-h-screen overflow-y-auto'>
+        <div className='col-span-2'><UserSidebar /></div>
+        <div className='col-span-10'><Outlet /></div>
       </div>
     }
     </>

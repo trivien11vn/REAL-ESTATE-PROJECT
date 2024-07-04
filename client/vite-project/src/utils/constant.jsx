@@ -1,6 +1,7 @@
 import path from "./path";
 import { MdOutlineDashboard } from "react-icons/md";
 import { BsFillHouseGearFill } from "react-icons/bs";
+import { FaRegUser } from "react-icons/fa";
 import App from "src/App";
 
 export const navigation = [
@@ -87,4 +88,14 @@ export const showOption = [
         path: `/${path.ADMIN_LAYOUT}/${path.DASHBOARD}`,
     },
    
+]
+
+export const userSidebar = [
+    {
+        id: 1,
+        path: `/${path.USER_LAYOUT}/${path.PERSONAL}`,
+        name: 'Personal',
+        icon: <FaRegUser />,
+        type: 'SINGLE'
+    },
 ]

@@ -18,6 +18,7 @@ export {default as SelectLibrary} from './Inputs/SelectLibrary'
 
 
 export {default as AdminSidebar} from './Sidebar/AdminSidebar'
+export {default as UserSidebar} from './Sidebar/UserSidebar'
 
 export {default as OTPVerifier} from './Auth/OTPVerifier'
 

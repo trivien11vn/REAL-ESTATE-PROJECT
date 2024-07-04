@@ -57,6 +57,7 @@ const Login = ({location, navigate}) => {
         sendOtp(data?.phone)
       }
       else{
+        setIsLoading(true)
         const response = await apiRegister(data)
         setIsLoading(false)
         if(response?.success){
