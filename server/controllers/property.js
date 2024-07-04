@@ -2,7 +2,7 @@
 const asyncHandler = require('express-async-handler');
 const db = require('../models');
 const redis = require('../config/redis.config');
-const { Sequelize } = require('sequelize');
+const { Sequelize, Op } = require('sequelize');
 
 const createNewProperty = asyncHandler(async (req, res) => {
     const {uid, role} = req.user; 
@@ -23,7 +23,7 @@ const createNewProperty = asyncHandler(async (req, res) => {
 })
 
 const getProperty = asyncHandler(async (req, res) => {
-    const {limit, page, fields, sort, address, ...query} = req.query
+    const {limit, page, fields, sort, address, price, ...query} = req.query
 
     const options = {}
     if(fields){
@@ -42,6 +42,17 @@ const getProperty = asyncHandler(async (req, res) => {
         query.address = Sequelize.where(Sequelize.fn('LOWER', Sequelize.col('Property.address')), 'LIKE', '%' + address.toLocaleLowerCase() + '%') 
     }
 
+    if(price){
+        const isBetween  = price?.every(el => !isNaN(el))
+        if(isBetween){
+            query.price = {[Op.between]: price}
+        }
+        else{
+            const number = price?.find(el => !isNaN(el))
+            const operator = price?.find(el => isNaN(el)) // operator === 'lte' or 'gte'
+            query.price = {[Op[operator]]: number}
+        }
+    }
     //Sorting
     // order = [[createdAt,ASC], [name,DESC]]
     if(sort){

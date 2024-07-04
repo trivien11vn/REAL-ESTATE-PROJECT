@@ -8,8 +8,10 @@ import path from 'src/utils/path';
 import { createSearchParams } from 'react-router-dom';
 import { twMerge } from 'tailwind-merge';
 import clsx from 'clsx';
+import { useAppStore } from 'src/store/useAppStore';
 
 const Search = ({navigate, location, direction='horizontal'}) => {
+    const {setModal} = useAppStore()
     const {propertyType} = usePropertiesStore()
     const {register, formState: {errors}, handleSubmit, setValue} = useForm()
     
@@ -31,6 +33,10 @@ const Search = ({navigate, location, direction='horizontal'}) => {
         }
         if(data?.start && data?.end){
             payload.price = [data?.start, data?.end]
+        }
+
+        if(direction === 'vertical'){
+            setModal(false, null)
         }
         navigate({
             pathname: `/${path.PROPERTIES}`,

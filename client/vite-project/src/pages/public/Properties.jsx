@@ -8,8 +8,9 @@ import { BreadCrumb, Button, InputSelect, Pagination, PropertyCard, Search } fro
 import { twMerge } from 'tailwind-merge'
 import { CiBoxList } from "react-icons/ci";
 import { useAppStore } from 'src/store/useAppStore'
+import withRouter from 'src/hocs/withRouter'
 
-const Properties = () => {
+const Properties = ({navigate, location}) => {
   //trong useeffect ko duoc goi bat dong bo
   const [mode, setMode ] = useState('ALL')
   const [properties, setProperties] = useState()
@@ -32,9 +33,13 @@ const Properties = () => {
       }
     }
     const params = Object.fromEntries([...searchParams])
+    if(params.price){
+      params.price = searchParams.getAll('price')
+    }
     if(sort){
       params.sort = sort
     }
+    console.log(params)
     fetchProperties(params)
   }, [searchParams, sort])
   
@@ -60,16 +65,19 @@ const Properties = () => {
               id='sort'
               errors={errors}
               options={[
-                {value: '-createdAt', label: 'Lastest'},
-                {value: 'createdAt', label: 'Oldest'},
-                {value: 'name', label: 'A - Z'},
-                {value: '-name', label: 'Z - A'}
+                {code: '-createdAt', label: 'Lastest'},
+                {code: 'createdAt', label: 'Oldest'},
+                {code: 'name', label: 'A - Z'},
+                {code: '-name', label: 'Z - A'}
               ]}
               inputClassname='w-fit rounded-md'
               label='Sort by: '
               placeholder= 'Select sort type'
               containerClassname='flex-row  items-center'
             />
+            <Button onClick={() => navigate(location.pathname)} className='whitespace-nowrap'>
+              Reset
+            </Button>
           </div>
           <div className='flex gap-2 items-center'>
             <Button onClick={()=> setMode('ALL')} className={twMerge(clsx('whitespace-nowrap bg-transparent text-black font-medium', mode === 'ALL' && 'font-bold'))}>All properties</Button>
@@ -97,4 +105,4 @@ const Properties = () => {
   )
 }
 
-export default Properties
+export default withRouter(Properties)

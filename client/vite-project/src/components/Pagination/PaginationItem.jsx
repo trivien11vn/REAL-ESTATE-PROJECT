@@ -1,14 +1,20 @@
 import clsx from 'clsx'
 import React from 'react'
-import { createSearchParams, useNavigate } from 'react-router-dom'
+import { createSearchParams, useNavigate, useSearchParams } from 'react-router-dom'
 import withRouter from 'src/hocs/withRouter'
 import { twJoin, twMerge } from 'tailwind-merge'
 
 const PaginationItem = ({content, page, navigate, location}) => {
+  const [searchParams] = useSearchParams()
   const handleChangePage = () => { 
+    const params = Object.fromEntries([...searchParams])
+    if(params.price){
+      params.price = searchParams.getAll('price')
+    }
+    params.page = content
     navigate({
       pathname: location?.pathname,
-      search: createSearchParams({page: content}).toString(),
+      search: createSearchParams(params).toString(),
     })
    }
   if(!Number(content)){
