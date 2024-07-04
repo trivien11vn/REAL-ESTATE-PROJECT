@@ -17,7 +17,6 @@ const Search = ({navigate, location, direction='horizontal'}) => {
     
     const [isShowPrice, setIsShowPrice] = useState(false)
     const handleSearchParam = (data) => {
-        console.log(data)
         const payload = new Object()
         if(data?.address){
             payload.address = data?.address.toString()

@@ -39,7 +39,6 @@ const Properties = ({navigate, location}) => {
     if(sort){
       params.sort = sort
     }
-    console.log(params)
     fetchProperties(params)
   }, [searchParams, sort])
   

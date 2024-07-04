@@ -67,10 +67,10 @@ const TopHeader = ({location}) => {
               </span>
               <span>
                 ID: #
-                <span>{current?.id?.slice(0,6)}</span>
+                <span>{current?.id}</span>
               </span>
             </div>
-            <img className='w-12 h-12 object-cover rounded-full border border-main-500' alt='avatar' src={current?.avater || `/avatar.jpg`}></img>
+            <img className='w-12 h-12 object-cover rounded-full border border-main-500' alt='avatar' src={current?.avatar || `/avatar.jpg`}></img>
             {
               isShowOptions && 
               <div className='absolute z-50 right-0 top-full rounded-md bg-white drop-shadow-sm flex flex-col py-2 border text-black'>

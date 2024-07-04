@@ -1,6 +1,7 @@
 import path from "./path";
 import { MdOutlineDashboard } from "react-icons/md";
 import { BsFillHouseGearFill } from "react-icons/bs";
+import App from "src/App";
 
 export const navigation = [
     {
