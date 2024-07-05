@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { apiGetPropertyById } from 'src/apis/property'
-import { BreadCrumb } from 'src/components'
+import { BreadCrumb, PropertyImage } from 'src/components'
 import withRouter from 'src/hocs/withRouter'
 import { usePropertiesStore } from 'src/store/usePropertiesStore'
 
 const PropertyDetail = ({navigate, location}) => {
-  
+
   const {id} = useParams()
   const [propertyDetail, setPropertyDetail] = useState(null)
   useEffect(() => {
@@ -29,6 +29,11 @@ const PropertyDetail = ({navigate, location}) => {
             <BreadCrumb />
           </div>
         </div>
+      </div>
+      <div className='w-main mx-auto my-8'>
+        {propertyDetail?.images &&
+        <PropertyImage images = {propertyDetail?.images}/>
+        }
       </div>
     </div>
   )

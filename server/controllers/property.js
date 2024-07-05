@@ -114,7 +114,25 @@ const getProperty = asyncHandler(async (req, res) => {
 
 const getDetailById = asyncHandler(async (req, res) => {
     const {propertyId} = req.params
-    const response = await db.Property.findByPk(propertyId)
+    const response = await db.Property.findByPk(propertyId, {
+        include: [
+            {
+                model: db.PropertyType, 
+                as: 'rPropertyType', 
+                attributes: ['name', 'description', 'image']
+            },
+            {
+                model: db.User, 
+                as: 'rPostedBy', 
+                attributes: ['avatar', 'phone', 'name', 'email']
+            },
+            {
+                model: db.User, 
+                as: 'rOwner', 
+                attributes: ['avatar', 'phone', 'name', 'email']
+            }
+        ]
+    })
     return res.json({
         success: Boolean(response),
         mes: response ? 'Got successfully' : 'Cannot get',

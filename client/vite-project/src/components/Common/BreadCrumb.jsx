@@ -20,8 +20,8 @@ const BreadCrumb = () => {
   return (
     <div className='flex'>
     {breadcrumbs.map(({ match, breadcrumb, location}, index) => (
-      <NavLink key={match.pathname} state={{name: location?.state?.name}} to={match.pathname}>
-        <span className={twMerge(clsx('hover:underline', Object.keys(match?.params).length > 0 &&  'w-[200px] line-clamp-1'))}>{breadcrumb}</span>
+      <NavLink className='h-5' key={match.pathname} state={{name: location?.state?.name}} to={match.pathname}>
+        <span className={twMerge(clsx('hover:underline', Object.keys(match?.params).length > 0 &&  'w-[300px] line-clamp-1'))}>{breadcrumb}</span>
         <span className='px-2'>{index < breadcrumbs.length-1 && " /"}</span>
       </NavLink>
     ))}
