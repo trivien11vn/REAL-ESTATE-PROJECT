@@ -57,8 +57,11 @@ const Login = ({location, navigate}) => {
         sendOtp(data?.phone)
       }
       else{
+        const {roleCode, ...payload} = data
+        console.log(data)
+        console.log(payload)
         setIsLoading(true)
-        const response = await apiRegister(data)
+        const response = await apiRegister(payload)
         setIsLoading(false)
         if(response?.success){
           Swal.fire({
@@ -145,10 +148,10 @@ const Login = ({location, navigate}) => {
           placeholder='Type your phone number'
           validate={{
             required: 'Please enter a valid phone number',
-            pattern: {
-              value: /(84|0[3|5|7|8|9])+([0-9]{8})\b/,
-              message: 'Phone number is invalid'
-            }
+            // pattern: {
+            //   value: /(84|0[3|5|7|8|9])+([0-9]{8})\b/,
+            //   message: 'Phone number is invalid'
+            // }
           }}
           errors={errors}
           />

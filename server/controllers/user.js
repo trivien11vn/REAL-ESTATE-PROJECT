@@ -50,8 +50,47 @@ const getRoles = asyncHandler(async (req, res) => {
 
 })
 
+const updateCurrent = asyncHandler(async (req, res) => {
+    const {name, email, address, avatar, phone}  = req.body
+    console.log(avatar)
+    const {uid} = req.user
+    const updateData = new Object()
+    if(avatar && avatar?.length === 1) {
+        updateData.avatar = avatar[0]
+    }
+    if(name){
+        updateData.name = name
+    }
+    if(address){
+        updateData.address = address
+    }
+    if(email){
+        updateData.email = email
+    }
+    if(phone){
+        const userRoles = await db.User_Role.findAll({
+            where: {userId: uid},
+            raw: true
+        })
+        if(userRoles.length === 1 && userRoles[0]?.roleCode === '4'){
+            updateData.phone = phone
+        }
+    }
+    const response = await db.User.update(
+        updateData,
+        {
+            where: {id: uid}
+        }
+    )
 
+    return res.json({
+        success: response[0] > 0,
+        mes: response[0] > 0 ? 'Updated successfully' : 'Cannot update'
+    })
+
+})
 module.exports = {
     getCurrent,
-    getRoles
+    getRoles,
+    updateCurrent
 }

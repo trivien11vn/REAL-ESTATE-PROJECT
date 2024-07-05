@@ -1,12 +1,16 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { InputFile, InputForm } from 'src/components'
+import { toast } from 'react-toastify'
+import { apiUpdateCurrent } from 'src/apis/user'
+import { Button, InputFile, InputForm } from 'src/components'
 import { useUserStore } from 'src/store/useUserStore'
 
 const Personal = () => {
-  const {current} = useUserStore()
-  const {register, formState:{errors}, handleSubmit, setValue, clearErrors, reset} = useForm()
+  const {current, getCurrent} = useUserStore()
+  const [isChangeAvatar, setIsChangeAvatar] = useState(false)
+  const {register, formState:{errors, isDirty}, handleSubmit, setValue, clearErrors, reset, watch} = useForm()
 
+  const initAvatar = watch('avatar')
   useEffect(() => {
     if(current){
       reset({
@@ -21,15 +25,29 @@ const Personal = () => {
 
   const getImages = (images) => {
     if(images && images.length > 0){
-      clearErrors('images')
+      clearErrors('avatar')
     }
     setValue(
-      'images',
+      'avatar',
       images?.map(el => el?.path)
     )
   }
 
-  console.log(current)
+  const onSubmit = async(data) => {
+    const {avatar, ...payload} = data
+    if(Array.isArray(avatar)){
+      payload.avatar = avatar
+    } //neu la string, nghia la k co thay doi => ko can update Avatar
+    const response = await apiUpdateCurrent(payload)
+    if(!response.success){
+      toast.error(response?.mes)
+    }
+    else{
+      toast.success(response?.mes)
+      getCurrent()
+      setIsChangeAvatar(false)
+    }
+  }
   return (
     <div className='h-full '>
       <div className='h-14 flex justify-between items-center border-b px-6'>
@@ -53,7 +71,7 @@ const Personal = () => {
           label='Phone number'
           require
           placeholder='Type your phone number'
-          readOnly = {current?.userRoles?.some(el => el.roleCode !== '4')}
+          readOnly =  {!(current?.userRoles?.length === 1 && current?.userRoles[0]?.roleCode === '4')}
         />
         <InputForm 
           id='email'
@@ -73,14 +91,28 @@ const Personal = () => {
           require
           placeholder='Type your address'
         />
-        <InputFile
-          id='avatar'
-          register={register}
-          errors={errors}
-          label='Avatar'
-          validate={{required: 'This fill cannot be empty'}}
-          getImage={getImages}
-         />
+        <div className='flex flex-col gap-3'>
+          <span 
+            className='font-medium text-main-700'>{`Avatar `}
+            <span className='text-xs cursor-pointer text-orange-500 hover:underline' onClick={() => setIsChangeAvatar(prev => !prev)}>
+            {isChangeAvatar ? 'Undo ❌' : 'Change 🌄'}
+            </span>
+          </span>
+          {
+            isChangeAvatar ?
+            <InputFile
+              id='avatar'
+              register={register}
+              errors={errors}
+              getImage={getImages}
+            /> 
+            : 
+            <img className='w-28 h-28 object-cover rounded-full' src={initAvatar || `/avatar.jpg`}/>
+          }
+        </div>
+        <Button className='mx-auto my-8' onClick={handleSubmit(onSubmit)}>
+          Update
+        </Button>
       </form>
     </div>
   )

@@ -6,6 +6,7 @@ const bcrypt =  require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 const register = asyncHandler(async (req, res) => {
+    console.log('call api register')
     // password, phone, email, role (enum:[USER, AGENT])
 
     // client sent: urlencode - form data ---> req.body
@@ -25,8 +26,7 @@ const register = asyncHandler(async (req, res) => {
     })
     const userId = response[0].id
     if(userId){
-        const roleCode = []
-        
+        const roleCode = ['4']
         if(req?.body?.roleCode){
             roleCode.push(req.body.roleCode)
         }
