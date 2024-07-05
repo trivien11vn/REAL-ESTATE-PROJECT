@@ -12,6 +12,10 @@ router.get(
     '/',
     ctrls.getProperty), 
 
+router.get(
+'/detail/:propertyId',
+ctrls.getDetailById), 
+
 
 //PUT dùng để cập nhật toàn bộ tài nguyên, còn PATCH dùng để cập nhật một phần tài nguyên.
     

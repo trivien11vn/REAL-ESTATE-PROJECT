@@ -6,6 +6,7 @@ const path = {
     OUR_AGENTS: 'our_agent',
     PROPERTIES: 'properties',
     SEARCH: 'search',
+    PROPERTY_DETAIL__ID: 'properties/:id',
 
     //ADMIN 
     ADMIN_LAYOUT : 'admin',

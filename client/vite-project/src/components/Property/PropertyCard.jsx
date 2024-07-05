@@ -7,13 +7,20 @@ import { BiArea } from "react-icons/bi";
 import { FaRegEye } from "react-icons/fa";
 import { IoShareSocialSharp } from "react-icons/io5";
 import { FaRegHeart } from "react-icons/fa";
+import { Link } from 'react-router-dom';
+import path from 'src/utils/path';
 
 const PropertyCard = ({property}) => {
   return (
     <div className='border rounded-md'>
       <img src={property?.featuredImage} className='w-full h-[240px] object-cover rounded-t-md'></img>
       <div className='p-4 flex flex-col gap-4'>
-        <h1 className='text-2xl font-medium uppercase text-gray-700 line-clamp-2'>{property?.name}</h1>
+        <Link 
+          state={{name: property?.name}}
+          to={`/${path.PROPERTIES}/${property?.id}`} 
+          className='hover:underline text-2xl font-medium uppercase text-gray-700 line-clamp-2'>
+        {property?.name}
+        </Link>
         <span className='text-main-500 text-xl font-bold flex items-center gap-1'>
           <FiDollarSign size={18}/>
           {` ${formatMoney(property?.price)}`}

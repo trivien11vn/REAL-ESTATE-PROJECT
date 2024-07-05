@@ -1,6 +1,6 @@
 import App from "src/App"
 import path from "./path"
-import { AboutUs, Home, OurAgents, Properties, PublicLayout, Search } from "src/pages/public"
+import { AboutUs, Home, OurAgents, Properties, PropertyDetail, PublicLayout, Search } from "src/pages/public"
 import { AdminLayout, CreatePropertyType, DashBoard, ManagePropertyType } from "src/pages/admin"
 import { Personal, UserLayout } from "src/pages/user"
 
@@ -28,6 +28,10 @@ const routes = [
                     {
                         path: path.OUR_AGENTS,
                         element: <OurAgents />,
+                    },
+                    {
+                        path: path.PROPERTY_DETAIL__ID,
+                        element: <PropertyDetail />,
                     },
                 ]
             },

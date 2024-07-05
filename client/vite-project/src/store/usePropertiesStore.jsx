@@ -4,6 +4,7 @@ import { create } from 'zustand'
 export const usePropertiesStore = create((set) => (
     {
         propertyType: [],
+
         getPropertyTypes: async (params) => {
             const response = await apiGetAllPropertyType(params)
             if(response.success){
@@ -12,6 +13,6 @@ export const usePropertiesStore = create((set) => (
             else {
                 return set(() => ({propertyType: []}))
             }
-        }
+        },
     }
 ))

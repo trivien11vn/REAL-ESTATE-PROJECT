@@ -111,7 +111,19 @@ const getProperty = asyncHandler(async (req, res) => {
         })
     }
 })
+
+const getDetailById = asyncHandler(async (req, res) => {
+    const {propertyId} = req.params
+    const response = await db.Property.findByPk(propertyId)
+    return res.json({
+        success: Boolean(response),
+        mes: response ? 'Got successfully' : 'Cannot get',
+        property: response
+    })
+})
+
 module.exports = {
     createNewProperty,
-    getProperty
+    getProperty,
+    getDetailById
 }

@@ -4,3 +4,9 @@ export const apiGetProperty = (params) => axios({
     url: '/property/',
     params
 })
+
+export const apiGetPropertyById = (id) => axios({
+    method: 'GET',
+    url: '/property/detail/' + id,
+})
+

@@ -4,3 +4,4 @@ export {default as AboutUs} from './AboutUs';
 export {default as OurAgents} from './OurAgents';
 export {default as Properties} from './Properties';
 export {default as Search} from './Search';
+export {default as PropertyDetail} from './PropertyDetail';
