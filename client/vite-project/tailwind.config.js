@@ -36,6 +36,7 @@ export default {
         "overlay-70": "rgba(0,0,0,0.7)",
         "overlay-30": "rgba(0,0,0,0.3)",
         "overlay-50": "rgba(0,0,0,0.5)",
+        "overlay-90": "rgba(0,0,0,0.9)",
       },
       width:{
         main: '1200px',
@@ -45,4 +46,5 @@ export default {
   plugins: [
     require('@tailwindcss/forms'),
   ],
+  mode: 'jit'
 }
