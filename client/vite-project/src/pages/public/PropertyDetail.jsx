@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { apiGetPropertyById } from 'src/apis/property'
-import { BoxInfo, BreadCrumb, PropertyImage } from 'src/components'
+import { BoxInfo, BreadCrumb, Map, PropertyImage } from 'src/components'
 import withRouter from 'src/hocs/withRouter'
 import { usePropertiesStore } from 'src/store/usePropertiesStore'
 import { FaMapMarkerAlt } from "react-icons/fa";
@@ -78,6 +78,9 @@ const PropertyDetail = ({navigate, location}) => {
                   <Info title='Posting Date' value={moment(propertyDetail?.createdAt).format('DD-MM-YYYY')} />
                 </tbody>
               </table>
+            </div>
+            <div>
+              <Map address={propertyDetail?.address} />
             </div>
           </div>
           <div className='col-span-3 flex flex-col gap-6'>

@@ -34,3 +34,5 @@ export {default as SelectPrice} from './Search/SelectPrice'
 export {default as Pagination} from './Pagination/Pagination'
 
 export {default as BoxInfo} from './User/BoxInfo'
+
+export {default as Map} from './Map/Map'
