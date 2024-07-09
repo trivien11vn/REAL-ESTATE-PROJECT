@@ -32,3 +32,5 @@ export {default as SearchItem} from './Search/SearchItem'
 export {default as SelectPrice} from './Search/SelectPrice'
 
 export {default as Pagination} from './Pagination/Pagination'
+
+export {default as BoxInfo} from './User/BoxInfo'

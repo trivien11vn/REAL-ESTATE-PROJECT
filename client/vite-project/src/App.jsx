@@ -6,6 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useUserStore } from './store/useUserStore'
 import { usePropertiesStore } from './store/usePropertiesStore'
 import { Outlet } from 'react-router-dom';
+import clsx from 'clsx';
 
 const App = () => {
   const {isShowModal} = useAppStore()
@@ -24,7 +25,11 @@ const App = () => {
   return (
     <>
     {isShowModal && <Modal />}
+    <div
+    className={clsx(isShowModal ? 'max-h-screen overflow-hidden' : 'max-h-full overflow-auto')}
+    >
     <Outlet />
+    </div>
     <ToastContainer
       position="top-right"
       autoClose={5000}
