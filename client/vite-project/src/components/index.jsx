@@ -25,7 +25,8 @@ export {default as OTPVerifier} from './Auth/OTPVerifier'
 export {default as PropertyCard} from './Property/PropertyCard'
 export {default as PropertyImage} from './Property/PropertyImage'
 export {default as ImageDetail} from './Property/ImageDetail'
-
+export {default as RelatedProperty} from './Property/RelatedProperty'
+export {default as PropertyItem} from './Property/PropertyItem'
 
 export {default as Search} from './Search/Search'
 export {default as SearchItem} from './Search/SearchItem'

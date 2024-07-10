@@ -101,7 +101,12 @@ const getProperty = asyncHandler(async (req, res) => {
                     model: db.User, 
                     as: 'rOwner', 
                     attributes: ['avatar', 'phone', 'name', 'email']
-                }
+                },
+                {
+                    model: db.PropertyType, 
+                    as: 'rPropertyType', 
+                    attributes: ['name', 'description', 'image', 'id']
+                },
             ]
         })
         return res.json({
@@ -119,7 +124,7 @@ const getDetailById = asyncHandler(async (req, res) => {
             {
                 model: db.PropertyType, 
                 as: 'rPropertyType', 
-                attributes: ['name', 'description', 'image']
+                attributes: ['name', 'description', 'image', 'id']
             },
             {
                 model: db.User, 

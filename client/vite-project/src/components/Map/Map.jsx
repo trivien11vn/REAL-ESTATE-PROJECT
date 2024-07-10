@@ -61,7 +61,7 @@ const FlyMapTo = () => {
         <TileLayer url={url} attribution={attribution} />
         <Marker position={center}>
           <Popup>
-            A pretty CSS3 popup. <br /> Easily customizable.
+            {address}
           </Popup>
         </Marker>
         <FlyMapTo />

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { apiGetPropertyById } from 'src/apis/property'
-import { BoxInfo, BreadCrumb, Map, PropertyImage } from 'src/components'
+import { apiGetProperty, apiGetPropertyById } from 'src/apis/property'
+import { BoxInfo, BreadCrumb, Map, PropertyImage, RelatedProperty } from 'src/components'
 import withRouter from 'src/hocs/withRouter'
 import { usePropertiesStore } from 'src/store/usePropertiesStore'
 import { FaMapMarkerAlt } from "react-icons/fa";
@@ -20,6 +20,9 @@ const Info = ({title, value, unit=''}) => {
 const PropertyDetail = ({navigate, location}) => {
 
   const {id} = useParams()
+  const [relatedProperty, setRelatedProperty] = useState({
+    propertyType: null, listingType:null
+  })
   const [propertyDetail, setPropertyDetail] = useState(null)
   useEffect(() => {
     const fetchDetailProperty = async() => {
@@ -29,7 +32,28 @@ const PropertyDetail = ({navigate, location}) => {
       }
     }
     fetchDetailProperty()
+    //scrollTo: 1 ham  --- scrollTop: 1 thuoc tinh
+    window.scrollTo(0,0) // scroll len dau trang
   }, [id])
+
+  useEffect(() => {
+    const relatedPost = async() => {
+      const [propertyType, listingType] = await Promise.all([
+        apiGetProperty({propertyTypeId: propertyDetail?.propertyTypeId, limit:5, fields:'name,id,featuredImage,price,listingType,isAvailable'}),
+        apiGetProperty({listingType: propertyDetail?.listingType, limit:5, fields:'name,id,featuredImage,price,listingType,isAvailable'}) 
+      ])
+      if(propertyType?.success){
+        setRelatedProperty(prev => ({...prev, propertyType: propertyType?.property?.rows}))
+      }
+      if(listingType?.success){
+        setRelatedProperty(prev => ({...prev, listingType: listingType?.property?.rows}))
+      }
+    }
+    if(propertyDetail){
+      relatedPost()
+    }
+  }, [propertyDetail])
+  
   
   return (
     <div className='w-full pb-[500px]'>
@@ -79,13 +103,15 @@ const PropertyDetail = ({navigate, location}) => {
                 </tbody>
               </table>
             </div>
-            <div>
-              <Map address={propertyDetail?.address} />
+            <div className='w-full h-[300px] bg-gray-500 rounded-md'>
+              {/* <Map address={propertyDetail?.address} /> */}
             </div>
           </div>
           <div className='col-span-3 flex flex-col gap-6'>
             <BoxInfo role='Agent' roleStyle='text-green-600' data={propertyDetail?.rPostedBy}/>
             <BoxInfo role='Owner' roleStyle='text-red-600' data={propertyDetail?.rOwner}/>
+            <RelatedProperty title='Similar Properties' data={relatedProperty?.propertyType}/>
+            <RelatedProperty title={`Properites for ${propertyDetail?.listingType}`} data={relatedProperty?.listingType}/>
           </div>
         </div>
       </div>

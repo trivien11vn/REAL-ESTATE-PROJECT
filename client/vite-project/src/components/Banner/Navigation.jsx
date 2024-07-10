@@ -16,7 +16,7 @@ const Navigation = ({location, navigate}) => {
   const {setModal} = useAppStore()
   return (
     <div className={twMerge(
-      clsx('h-[85px] w-full bg-transparent fixed top-[85px] z-10 px-[100px] py-[26px] flex items-center justify-between',
+      clsx('h-[85px] w-full bg-transparent fixed top-[85px] z-[9999] px-[100px] py-[26px] flex items-center justify-between',
         location?.pathname !== '/' && 'bg-white')
     )}>
       <Link to='/'>
