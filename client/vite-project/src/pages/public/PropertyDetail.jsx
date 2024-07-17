@@ -116,6 +116,7 @@ const PropertyDetail = ({navigate, location}) => {
         </div>
       </div>
     </div>
+    //save
   )
 }
 
